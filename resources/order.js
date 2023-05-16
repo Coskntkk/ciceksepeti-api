@@ -72,5 +72,84 @@ Order.prototype.list = async function list(params) {
         });
 };
 
+/**
+ * Counts the number of orders.
+ *
+ * @param {Object} params Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Order.prototype.count = async function count(params) {
+    params = params || {}
+    params.pageSize = 1;
+    params.page = 0;
+    
+    if (!params.startDate || !params.endDate) {
+        throw new Error('startDate and endDate are required.');
+    }
+
+    if (params.status) {
+        params.status = statusIds[params.status];
+    }
+
+    let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
+        + '/api'
+        + '/' + this.ciceksepeti.options.apiVersion
+        + '/Order/GetOrders';
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+        data: params,
+    };
+
+    return axios(config)
+        .then(function (response) {
+            return {
+                totalCount: response.data['orderListCount'],
+            };
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message']);
+        });
+};
+
+/**
+ * Returns a specific order.
+ *
+ * @param {Object} params Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Order.prototype.get = async function get(params) {
+    params = params || {}
+    params.pageSize = 1;
+    params.page = 0;
+
+    let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
+        + '/api'
+        + '/' + this.ciceksepeti.options.apiVersion
+        + '/Order/GetOrders';
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+        data: params,
+    };
+
+    return axios(config)
+        .then(function (response) {
+            return response.data['supplierOrderListWithBranch'][0];
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message']);
+        });
+};
 
 module.exports = Order;

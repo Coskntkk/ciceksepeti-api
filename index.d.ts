@@ -34,12 +34,14 @@ declare class Ciceksepeti {
     callback: (limits: Ciceksepeti.ICallLimits) => void
   ): Ciceksepeti;
   product: {
-    list: (params?: Ciceksepeti.ListProductsParams) => Promise<Ciceksepeti.ListProductResponse>;
-    count: (params?: Ciceksepeti.CountProductsParams) => Promise<Ciceksepeti.CountProductResponse>;
-    get: (params?: Ciceksepeti.GetProductParams) => Promise<Ciceksepeti.IProduct>;
+    list: (params?: Ciceksepeti.IListProductsParams) => Promise<Ciceksepeti.IListProductResponse>;
+    count: (params?: Ciceksepeti.ICountProductsParams) => Promise<Ciceksepeti.ICountResponse>;
+    get: (params: Ciceksepeti.IGetProductParams) => Promise<Ciceksepeti.IProduct>;
   };
   order: {
-    list: (params?: Ciceksepeti.ListOrdersParams) => Promise<Ciceksepeti.ListOrdersResponse>;
+    list: (params?: Ciceksepeti.IListOrdersParams) => Promise<Ciceksepeti.IListOrdersResponse>;
+    count: (params?: Ciceksepeti.ICountOrdersParams) => Promise<Ciceksepeti.ICountResponse>;
+    get: (params: Ciceksepeti.IGetOrderParams) => Promise<any>; //<Ciceksepeti.IOrder>;
   };
 }
 
@@ -65,7 +67,7 @@ declare namespace Ciceksepeti {
   /** ------------------ Products ------------------ */
 
   /** List Products */
-  interface ListProductsParams {
+  interface IListProductsParams {
     status?: ListProductStatusType | ListProductStatusType[] | null;
     page?: number | null;
     limit?: number | null;
@@ -74,7 +76,7 @@ declare namespace Ciceksepeti {
     variantName?: string | null;
   }
 
-  interface ListProductResponse {
+  interface IListProductResponse {
     totalCount?: number | null;
     products?: IProduct[] | null;
   }
@@ -111,17 +113,13 @@ declare namespace Ciceksepeti {
   }
 
   /** Count Products */
-  interface CountProductsParams {
+  interface ICountProductsParams {
     status?: ListProductStatusType | ListProductStatusType[] | null;
     variantName?: string | null;
   }
 
-  interface CountProductResponse {
-    totalCount?: number | null;
-  }
-
   /** Get Product */
-  interface GetProductParams {
+  interface IGetProductParams {
     stockCode: string;
   }
 
@@ -129,7 +127,7 @@ declare namespace Ciceksepeti {
 
   /** List Orders */
 
-  interface ListOrdersParams {
+  interface IListOrdersParams {
     startDate?: string | null;
     endDate?: string | null;
     pageSize: number | null;
@@ -140,10 +138,118 @@ declare namespace Ciceksepeti {
     isOrderStatusActive?: boolean | null;
   }
 
-  interface ListOrdersResponse {
+  interface IListOrdersResponse {
     totalCount?: number | null;
     totalPages: number | null;
     orders?: any[] | null; //IOrder[] | null;
+  }
+
+  /** Count Orders */
+
+  interface ICountOrdersParams {
+    startDate: string | null;
+    endDate: string | null;
+    status?: ListOrderStatusType | ListOrderStatusType[] | null;
+    isOrderStatusActive?: boolean | null;
+  }
+
+  /** Get Order */
+
+  interface IGetOrderParams {
+    orderNo: number;
+    orderItemNo?: number;
+  }
+
+  interface IOrder {
+    branchId?: number | null;
+    customerId?: number | null;
+    accountCode?: string | null;
+    accountCodePrefix?: string | null;
+    orderId?: number | null;
+    orderItemId?: number | null;
+    orderCreateDate?: string | null;
+    cargoPrice?: number | null;
+    orderCreateTime?: string | null;
+    orderModifyDate?: string | null;
+    orderModifyTime?: string | null;
+    barcode?: string | null;
+    cardMessage?: string | null;
+    cardName?: string | null;
+    deliveryCharge?: number | null;
+    orderPaymentType?: string | null;
+    orderItemStatusId?: number | null; // TODO: enum
+    orderProductStatus?: string | null;
+    orderItemTextListModel?: any[],
+    discount?: number | null;
+    totalPrice?: number | null;
+    tax?: number | null;
+    receiverName?: string | null;
+    receiverPhone?: string | null;
+    receiverAddress?: string | null;
+    deliveryType?: number | null;
+    deliveryDate?: string | null;
+    requestedDeliveryDate?: string | null;
+    cargoCompany?: string | null;
+    receiverCity?: string | null;
+    receiverRegion?: string | null;
+    receiverDistrict?: string | null;
+    senderName?: string | null;
+    senderAddress?: string | null;
+    senderTaxNumber?: string | null;
+    senderTaxOfficeName?: string | null;
+    senderCity?: string | null;
+    senderRegion?: string | null;
+    senderDistrict?: string | null;
+    senderPhone?: string | null;
+    senderEmail?: string | null;
+    cargoNumber?: string | null;
+    shipmentTrackingUrl?: string | null;
+    productId?: number | null;
+    productCode?: string | null;
+    code?: string | null;
+    name?: string | null;
+    variantName?: string | null;
+    quantity?: number | null;
+    quantityUnit?: string | null;
+    invoiceEmail?: string | null;
+    isOrderStatusActive?: boolean | null;
+    partialNumber?: string | null;
+    senderCompanyName?: string | null;
+    allowanceRate?: number | null;
+    credit?: number | null;
+    deliveryOptionName?: string | null;
+    deliveryTime?: string | null;
+    cancellationResult?: string | null;
+    isFloristCargoOrder?: boolean | null;
+    receiverCompanyName?: string | null;
+    floristName?: string | null;
+    floristAddress?: string | null;
+    isLateToCargo?: boolean | null;
+    allowanceExpiryDay?: number | null;
+    branchDiscountPart?: number | null;
+    csDiscountPart?: number | null;
+    invoicePrice?: number | null;
+    itemPrice?: number | null;
+    cancellationNote?: string | null;
+    receiverCountryCode?: string | null;
+    zipCode?: string | null;
+    currency?: string | null;
+    websiteId?: number | null;
+    extraProductTotalPrice?: number | null;
+    extraProductTotalQuantity?: number | null;
+    extraProducts?: any[],
+    promotionDescription?: string | null;
+  }
+
+  interface IOrderItemTextListModel {
+    text?: string | null;
+    value?: string | null;
+  }
+
+  /** ------------------ Shared ------------------ */
+
+  interface ICountResponse {
+    totalCount?: number | null;
   }
 
   /** ------------------ Types ------------------ */

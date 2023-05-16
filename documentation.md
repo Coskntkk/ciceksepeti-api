@@ -18,8 +18,8 @@ Lists products on Çiçeksepeti.
 - Response:
 ```js
 {
-    totalCount: 155,
-    products: []
+  totalCount: 155,
+  products: []
 }
 ```
 
@@ -37,7 +37,7 @@ Counts products on Çiçeksepeti.
 - Response:
 ```js
 {
-    totalCount: 155
+  totalCount: 155
 }
 ```
 
@@ -54,8 +54,8 @@ Finds a product by stock code.
 - Response:
 ```js
 {
-    productName: "...",
-    ...
+  productName: "...",
+  ...
 }
 ```
 
@@ -65,7 +65,7 @@ Finds a product by stock code.
 
   - `ciceksepeti.order.list([params])`
 
-Lists products on Çiçeksepeti.
+Lists orders on Çiçeksepeti.
   
 | param | required | type |
 | --- | --- | --- |
@@ -73,7 +73,7 @@ Lists products on Çiçeksepeti.
 | endDate | false if orderNo or orderItem entered, true else | string |
 | pageSize | true | number |
 | page | true | number |
-| status | false | string |
+| status | false |  enum: 'new', 'preparing', 'shipped', 'will_be_shipped', 'delivered'  |
 | orderNo | false | string |
 | orderItemNo | false | string |
 | isOrderStatusActive | false | bool |
@@ -81,9 +81,48 @@ Lists products on Çiçeksepeti.
 - Response:
 ```js
 {
-    totalCount: 123,
-    totalPages: 4,
-    orders: [],
+  totalCount: 123,
+  totalPages: 4,
+  orders: [],
+}
+```
+
+***
+
+  - `ciceksepeti.order.count([params])`
+
+Counts orders on Çiçeksepeti.
+  
+| param | required | type |
+| --- | --- | --- |
+| startDate | true | string |
+| endDate | true | string |
+| status | false | enum: 'new', 'preparing', 'shipped', 'will_be_shipped', 'delivered' |
+| isOrderStatusActive | false | bool |
+
+- Response:
+```js
+{
+  totalCount: 123
+}
+```
+
+***
+
+  - `ciceksepeti.order.get([params])`
+
+Gets an order by orderNo.
+  
+| param | required | type |
+| --- | --- | --- |
+| orderNo | true | number |
+| orderItemNo | false | number |
+
+- Response:
+```js
+{
+  orderId: 123456789,
+  ...
 }
 ```
 

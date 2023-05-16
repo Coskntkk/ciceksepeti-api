@@ -51,7 +51,9 @@ const ciceksepeti = new Ciceksepeti({
 
 View the [documentation](https://github.com/Coskntkk/ciceksepeti-api/blob/main/documentation.md) for a list of available resources and methods.
 
----
+## License
+
+[MIT](LICENSE)
 
 [npm-ciceksepeti-api-badge]: 
     https://img.shields.io/npm/v/ciceksepeti-api.svg

@@ -1,0 +1,30 @@
+{
+  "name": "ciceksepeti-api",
+  "version": "0.1.0",
+  "description": "Çiçeksepeti Marketplace API bindings for Node.js",
+  "main": "index.js",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "files": [
+    "resources",
+    "index.js",
+    "index.d.ts"
+  ],
+  "dependencies": {
+    "axios": "^1.4.0"
+  },
+  "repository": "Coskntkk/ciceksepeti-api",
+  "keywords": [
+    "Çiçeksepeti",
+    "Ciceksepeti",
+    "API",
+    "Client"
+  ],
+  "author": "coşkun atak <coskntkk@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Coskntkk/ciceksepeti-api#readme/issues"
+  },
+  "homepage": "https://github.com/Coskntkk/ciceksepeti-api"
+}

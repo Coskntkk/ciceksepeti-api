@@ -1,8 +1,6 @@
 # Çiçeksepeti API
 
 [![Version npm][npm-ciceksepeti-api-badge]][npm-ciceksepeti-api]
-[![Build Status][ci-ciceksepeti-api-badge]][ci-ciceksepeti-api]
-[![Coverage Status][coverage-ciceksepeti-api-badge]][coverage-ciceksepeti-api]
 
 Çiçeksepeti Marketplace API bindings for Node.js.
 

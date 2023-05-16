@@ -32,9 +32,6 @@ const sortMethods = new Object({
  */
 function Product(ciceksepeti) {
     this.ciceksepeti = ciceksepeti;
-
-    this.name = 'products';
-    this.key = 'product';
 }
 
 /**
@@ -45,7 +42,7 @@ function Product(ciceksepeti) {
  * @public
  */
 Product.prototype.list = async function list(params) {
-    params = params || {}
+    params = params || {};
 
     let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
         + '/api'
@@ -56,7 +53,7 @@ Product.prototype.list = async function list(params) {
         + (params.limit ? `&PageSize=${params.limit}` : '')
         + (params.sortBy ? `&SortMethod=${sortMethods[params.sortBy]}` : '')
         + (params.stockCode ? `&StockCode=${params.stockCode}` : '')
-        + (params.variantName ? `&VariantName=${params.variantName}` : '')
+        + (params.variantName ? `&VariantName=${params.variantName}` : '');
 
     let config = {
         method: 'get',
@@ -68,10 +65,10 @@ Product.prototype.list = async function list(params) {
 
     return axios(config)
         .then(function (response) {
-            return response.data
+            return response.data;
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message'])
+            throw new Error(error.response.data['Message']);
         });
 };
 
@@ -83,14 +80,14 @@ Product.prototype.list = async function list(params) {
  * @public
  */
 Product.prototype.count = async function count(params) {
-    params = params || {}
+    params = params || {};
 
     let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
         + '/api'
         + '/' + this.ciceksepeti.options.apiVersion
         + '/Products?'
         + (params.status ? `&ProductStatus=${productStatuses[params.status]}` : '')
-        + (params.variantName ? `&VariantName=${params.variantName}` : '')
+        + (params.variantName ? `&VariantName=${params.variantName}` : '');
 
     let config = {
         method: 'get',
@@ -104,10 +101,10 @@ Product.prototype.count = async function count(params) {
         .then(function (response) {
             return {
                 totalCount: response.data.totalCount,
-            }
+            };
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message'])
+            throw new Error(error.response.data['Message']);
         });
 };
 
@@ -119,14 +116,14 @@ Product.prototype.count = async function count(params) {
  * @public
  */
 Product.prototype.get = async function get(params) {
-    params = params || {}
-    if (!params.stockCode) throw new Error('stockCode is required')
+    params = params || {};
+    if (!params.stockCode) throw new Error('stockCode is required.');
 
     let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
         + '/api'
         + '/' + this.ciceksepeti.options.apiVersion
         + '/Products?'
-        + (params.stockCode ? `&StockCode=${params.stockCode}` : '')
+        + (params.stockCode ? `&StockCode=${params.stockCode}` : '');
 
     let config = {
         method: 'get',
@@ -138,10 +135,10 @@ Product.prototype.get = async function get(params) {
 
     return axios(config)
         .then(function (response) {
-            return response.data.products[0]
+            return response.data.products[0];
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message'])
+            throw new Error(error.response.data['Message']);
         });
 };
 

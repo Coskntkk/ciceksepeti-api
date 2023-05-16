@@ -1,6 +1,6 @@
 {
   "name": "ciceksepeti-api",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Çiçeksepeti Marketplace API bindings for Node.js",
   "main": "index.js",
   "engines": {

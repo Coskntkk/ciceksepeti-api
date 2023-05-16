@@ -2,6 +2,7 @@
 
 const map = {
     product: 'product',
+    order: 'order',
 };
 
 /**

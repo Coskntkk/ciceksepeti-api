@@ -36,10 +36,10 @@ declare class Ciceksepeti {
   product: {
     list: (params?: Ciceksepeti.ListProductsParams) => Promise<Ciceksepeti.ListProductResponse>;
     count: (params?: Ciceksepeti.CountProductsParams) => Promise<Ciceksepeti.CountProductResponse>;
-    // create: (params: any) => Promise<Ciceksepeti.IProduct>;
     get: (params?: Ciceksepeti.GetProductParams) => Promise<Ciceksepeti.IProduct>;
-    // updateStockAndPrice: (params?: any) => Promise<Ciceksepeti.IProduct>;
-    // update: (id: number, params: any) => Promise<Ciceksepeti.IProduct>;
+  };
+  order: {
+    list: (params?: Ciceksepeti.ListOrdersParams) => Promise<Ciceksepeti.ListOrdersResponse>;
   };
 }
 
@@ -62,7 +62,7 @@ declare namespace Ciceksepeti {
     max: number;
   }
 
-  /** ------------------ Product ------------------ */
+  /** ------------------ Products ------------------ */
 
   /** List Products */
   interface ListProductsParams {
@@ -125,6 +125,27 @@ declare namespace Ciceksepeti {
     stockCode: string;
   }
 
+  /** ------------------ Orders ------------------ */
+
+  /** List Orders */
+
+  interface ListOrdersParams {
+    startDate?: string | null;
+    endDate?: string | null;
+    pageSize: number | null;
+    page: number | null;
+    status?: ListOrderStatusType | ListOrderStatusType[] | null;
+    orderNo?: number | null;
+    orderItemNo?: number | null;
+    isOrderStatusActive?: boolean | null;
+  }
+
+  interface ListOrdersResponse {
+    totalCount?: number | null;
+    totalPages: number | null;
+    orders?: any[] | null; //IOrder[] | null;
+  }
+
   /** ------------------ Types ------------------ */
   type ListProductStatusType =
     'draft' |
@@ -133,7 +154,7 @@ declare namespace Ciceksepeti {
     'rejected' |
     'passive' |
     'published_waiting_for_approval' |
-    'out_of_stock'
+    'out_of_stock';
 
   type ListProductSortByType =
     'name_asc' |
@@ -143,6 +164,12 @@ declare namespace Ciceksepeti {
     'price_asc' |
     'price_desc' |
     'created_date_asc' |
-    'created_date_desc'
+    'created_date_desc';
 
+  type ListOrderStatusType =
+    'new' |
+    'preparing' |
+    'shipped' |
+    'will_be_shipped' |
+    'delivered';
 }

@@ -4,7 +4,7 @@ const pkg = require('./package.json');
 const resources = require('./resources/index.js');
 
 /**
- * Creates a Shopify instance.
+ * Creates a Ciceksepeti instance.
  *
  * @param {Object} options Configuration options
  * @param {String} options.apiKey The API Key for your Çiçeksepeti store

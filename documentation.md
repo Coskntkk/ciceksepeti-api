@@ -1,3 +1,5 @@
+# Ciceksepeti API Documentation
+
 ## Product
 
   - `ciceksepeti.product.list([params])`
@@ -54,6 +56,34 @@ Finds a product by stock code.
 {
     productName: "...",
     ...
+}
+```
+
+***
+
+## Order
+
+  - `ciceksepeti.order.list([params])`
+
+Lists products on Çiçeksepeti.
+  
+| param | required | type |
+| --- | --- | --- |
+| startDate | false if orderNo or orderItem entered, true else | string |
+| endDate | false if orderNo or orderItem entered, true else | string |
+| pageSize | true | number |
+| page | true | number |
+| status | false | string |
+| orderNo | false | string |
+| orderItemNo | false | string |
+| isOrderStatusActive | false | bool |
+
+- Response:
+```js
+{
+    totalCount: 123,
+    totalPages: 4,
+    orders: [],
 }
 ```
 

@@ -34,10 +34,10 @@ declare class Ciceksepeti {
     callback: (limits: Ciceksepeti.ICallLimits) => void
   ): Ciceksepeti;
   product: {
-    // count: (params?: any) => Promise<number>;
-    // create: (params: any) => Promise<Ciceksepeti.IProduct>;
-    // get: (stockCode: string, params?: any) => Promise<Ciceksepeti.IProduct>;
     list: (params?: Ciceksepeti.ListProductsParams) => Promise<Ciceksepeti.ListProductResponse>;
+    count: (params?: Ciceksepeti.CountProductsParams) => Promise<Ciceksepeti.CountProductResponse>;
+    // create: (params: any) => Promise<Ciceksepeti.IProduct>;
+    get: (params?: Ciceksepeti.GetProductParams) => Promise<Ciceksepeti.IProduct>;
     // updateStockAndPrice: (params?: any) => Promise<Ciceksepeti.IProduct>;
     // update: (id: number, params: any) => Promise<Ciceksepeti.IProduct>;
   };
@@ -74,25 +74,6 @@ declare namespace Ciceksepeti {
     variantName?: string | null;
   }
 
-  type ListProductStatusType =
-    'draft' |
-    'waiting_for_approval' |
-    'published' |
-    'rejected' |
-    'passive' |
-    'published_waiting_for_approval' |
-    'out_of_stock'
-
-  type ListProductSortByType =
-    'name_asc' |
-    'name_desc' |
-    'stock_asc' |
-    'stock_desc' |
-    'price_asc' |
-    'price_desc' |
-    'created_date_asc' |
-    'created_date_desc'
-
   interface ListProductResponse {
     totalCount?: number | null;
     products?: IProduct[] | null;
@@ -128,4 +109,40 @@ declare namespace Ciceksepeti {
     name?: string | null;
     textLength?: number | null;
   }
+
+  /** Count Products */
+  interface CountProductsParams {
+    status?: ListProductStatusType | ListProductStatusType[] | null;
+    variantName?: string | null;
+  }
+
+  interface CountProductResponse {
+    totalCount?: number | null;
+  }
+
+  /** Get Product */
+  interface GetProductParams {
+    stockCode: string;
+  }
+
+  /** ------------------ Types ------------------ */
+  type ListProductStatusType =
+    'draft' |
+    'waiting_for_approval' |
+    'published' |
+    'rejected' |
+    'passive' |
+    'published_waiting_for_approval' |
+    'out_of_stock'
+
+  type ListProductSortByType =
+    'name_asc' |
+    'name_desc' |
+    'stock_asc' |
+    'stock_desc' |
+    'price_asc' |
+    'price_desc' |
+    'created_date_asc' |
+    'created_date_desc'
+
 }

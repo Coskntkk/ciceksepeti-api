@@ -49,17 +49,33 @@ const ciceksepeti = new Ciceksepeti({
 
 ## Available resources and methods
 
-- product
-  - `list([params])`
+### product
 
-| param       | required | type                                                                                                                         |
-| ----------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| status      | false    | enum: 'draft', 'waiting_for_approval', 'published', 'rejected', 'passive', 'published_waiting_for_approval', 'out_of_stock'  |
-| page        | false    | number                                                                                                                       |
-| limit       | false    | number                                                                                                                       |
-| sortBy      | false    | enum: 'name_asc', 'name_desc', 'stock_asc', 'stock_desc', 'price_asc', 'price_desc', 'created_date_asc', 'created_date_desc' |
-| stockCode   | false    | string                                                                                                                       |
-| variantName | false    | string                                                                                                                       |
+  - `ciceksepeti.product.list([params])`
+  
+| param | required | type |
+| --- | --- | --- |
+| status | false | enum: 'draft', 'waiting_for_approval', 'published', 'rejected', 'passive', 'published_waiting_for_approval', 'out_of_stock'  |
+| page | false | number |
+| limit | false | number |
+| sortBy | false | enum: 'name_asc', 'name_desc', 'stock_asc', 'stock_desc', 'price_asc', 'price_desc', 'created_date_asc', 'created_date_desc' |
+| stockCode | false | string |
+| variantName | false | string |
+
+*** 
+- `ciceksepeti.product.count([params])`
+
+| param | required | type |
+| --- | --- | --- |
+| status | false | enum: 'draft', 'waiting_for_approval', 'published', 'rejected', 'passive', 'published_waiting_for_approval', 'out_of_stock'  |
+| variantName | false | string |
+
+*** 
+- `ciceksepeti.product.get([params])`
+
+| param | required | type |
+| --- | --- | --- |
+| stockCode | true | string |
 
 ---
 

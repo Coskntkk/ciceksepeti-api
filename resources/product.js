@@ -46,6 +46,7 @@ function Product(ciceksepeti) {
  */
 Product.prototype.list = async function list(params) {
     params = params || {}
+
     let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
         + '/api'
         + '/' + this.ciceksepeti.options.apiVersion
@@ -71,9 +72,77 @@ Product.prototype.list = async function list(params) {
         })
         .catch(function (error) {
             throw new Error(error.response.data['Message'])
-            // return error.response.data
         });
 };
 
+/**
+ * Counts products.
+ *
+ * @param {Object} params Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Product.prototype.count = async function count(params) {
+    params = params || {}
+
+    let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
+        + '/api'
+        + '/' + this.ciceksepeti.options.apiVersion
+        + '/Products?'
+        + (params.status ? `&ProductStatus=${productStatuses[params.status]}` : '')
+        + (params.variantName ? `&VariantName=${params.variantName}` : '')
+
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0
+    };
+
+    return axios(config)
+        .then(function (response) {
+            return {
+                totalCount: response.data.totalCount,
+            }
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message'])
+        });
+};
+
+/**
+ * Gets a product by stock code.
+ *
+ * @param {Object} params Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Product.prototype.get = async function get(params) {
+    params = params || {}
+    if (!params.stockCode) throw new Error('stockCode is required')
+
+    let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
+        + '/api'
+        + '/' + this.ciceksepeti.options.apiVersion
+        + '/Products?'
+        + (params.stockCode ? `&StockCode=${params.stockCode}` : '')
+
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0
+    };
+
+    return axios(config)
+        .then(function (response) {
+            return response.data.products[0]
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message'])
+        });
+};
 
 module.exports = Product;

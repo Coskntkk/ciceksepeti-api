@@ -60,10 +60,10 @@ View the [documentation](https://github.com/Coskntkk/ciceksepeti-api/blob/main/d
 [npm-ciceksepeti-api]: 
     https://www.npmjs.com/package/ciceksepeti-api
 [ci-ciceksepeti-api-badge]: 
-    https://img.shields.io/github/workflow/status/Coskntkk/ciceksepeti-api/CI/master?label=CI
+    https://img.shields.io/github/workflow/status/Coskntkk/ciceksepeti-api/CI/main?label=CI
 [ci-ciceksepeti-api]: 
-    https://github.com/Coskntkk/ciceksepeti-api/actions?query=workflow%3ACI+branch%3Amaster
+    https://github.com/Coskntkk/ciceksepeti-api/actions?query=workflow%3ACI+branch%3Amain
 [coverage-ciceksepeti-api-badge]: 
-    https://img.shields.io/coveralls/Coskntkk/ciceksepeti-api/master.svg
+    https://img.shields.io/coveralls/Coskntkk/ciceksepeti-api/main.svg
 [coverage-ciceksepeti-api]: 
     https://coveralls.io/github/Coskntkk/ciceksepeti-api

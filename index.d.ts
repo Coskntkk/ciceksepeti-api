@@ -41,7 +41,7 @@ declare class Ciceksepeti {
   order: {
     list: (params?: Ciceksepeti.IListOrdersParams) => Promise<Ciceksepeti.IListOrdersResponse>;
     count: (params?: Ciceksepeti.ICountOrdersParams) => Promise<Ciceksepeti.ICountResponse>;
-    get: (params: Ciceksepeti.IGetOrderParams) => Promise<any>; //<Ciceksepeti.IOrder>;
+    get: (params: Ciceksepeti.IGetOrderParams) => Promise<Ciceksepeti.IOrder>;
   };
 }
 
@@ -141,7 +141,7 @@ declare namespace Ciceksepeti {
   interface IListOrdersResponse {
     totalCount?: number | null;
     totalPages: number | null;
-    orders?: any[] | null; //IOrder[] | null;
+    orders?: IOrder[] | null;
   }
 
   /** Count Orders */
@@ -177,7 +177,7 @@ declare namespace Ciceksepeti {
     cardName?: string | null;
     deliveryCharge?: number | null;
     orderPaymentType?: string | null;
-    orderItemStatusId?: number | null; // TODO: enum
+    orderItemStatusId?: number | null;
     orderProductStatus?: string | null;
     orderItemTextListModel?: any[],
     discount?: number | null;

@@ -43,6 +43,9 @@ declare class Ciceksepeti {
     count: (params?: Ciceksepeti.ICountOrdersParams) => Promise<Ciceksepeti.ICountResponse>;
     get: (params: Ciceksepeti.IGetOrderParams) => Promise<Ciceksepeti.IOrder>;
   };
+  category: {
+    list: () => Promise<Ciceksepeti.IListCategoriesResponse>;
+  };
 }
 
 /*~ If you want to expose types from your module as well, you can
@@ -56,13 +59,13 @@ declare namespace Ciceksepeti {
     // timeout?: number;
     // maxRetries?: number;
     // maxRetryAfter?: number;
-  }
+  };
 
   export interface ICallLimits {
     remaining: number;
     current: number;
     max: number;
-  }
+  };
 
   /** ------------------ Products ------------------ */
 
@@ -74,12 +77,12 @@ declare namespace Ciceksepeti {
     sortBy?: ListProductSortByType | null;
     stockCode?: string | null;
     variantName?: string | null;
-  }
+  };
 
   interface IListProductResponse {
     totalCount?: number | null;
     products?: IProduct[] | null;
-  }
+  };
 
   interface IProduct {
     productName?: string | null;
@@ -104,29 +107,28 @@ declare namespace Ciceksepeti {
     isActive?: boolean | null;
     images?: string[] | null;
     attributes?: IProductAttribute[] | null;
-  }
+  };
 
   interface IProductAttribute {
     id?: number | null;
     name?: string | null;
     textLength?: number | null;
-  }
+  };
 
   /** Count Products */
   interface ICountProductsParams {
     status?: ListProductStatusType | ListProductStatusType[] | null;
     variantName?: string | null;
-  }
+  };
 
   /** Get Product */
   interface IGetProductParams {
     stockCode: string;
-  }
+  };
 
   /** ------------------ Orders ------------------ */
 
   /** List Orders */
-
   interface IListOrdersParams {
     startDate?: string | null;
     endDate?: string | null;
@@ -136,29 +138,27 @@ declare namespace Ciceksepeti {
     orderNo?: number | null;
     orderItemNo?: number | null;
     isOrderStatusActive?: boolean | null;
-  }
+  };
 
   interface IListOrdersResponse {
     totalCount?: number | null;
     totalPages: number | null;
     orders?: IOrder[] | null;
-  }
+  };
 
   /** Count Orders */
-
   interface ICountOrdersParams {
     startDate: string | null;
     endDate: string | null;
     status?: ListOrderStatusType | ListOrderStatusType[] | null;
     isOrderStatusActive?: boolean | null;
-  }
+  };
 
   /** Get Order */
-
   interface IGetOrderParams {
     orderNo: number;
     orderItemNo?: number;
-  }
+  };
 
   interface IOrder {
     branchId?: number | null;
@@ -179,7 +179,7 @@ declare namespace Ciceksepeti {
     orderPaymentType?: string | null;
     orderItemStatusId?: number | null;
     orderProductStatus?: string | null;
-    orderItemTextListModel?: any[],
+    orderItemTextListModel?: any[] | null;
     discount?: number | null;
     totalPrice?: number | null;
     tax?: number | null;
@@ -237,20 +237,34 @@ declare namespace Ciceksepeti {
     websiteId?: number | null;
     extraProductTotalPrice?: number | null;
     extraProductTotalQuantity?: number | null;
-    extraProducts?: any[],
+    extraProducts?: any[] | null;
     promotionDescription?: string | null;
-  }
+  };
 
   interface IOrderItemTextListModel {
     text?: string | null;
     value?: string | null;
-  }
+  };
+
+  /** ------------------ Categories ------------------ */
+
+  /** List Categories */
+  interface IListCategoriesResponse {
+    categories?: ICategory[] | null;
+  };
+
+  interface ICategory {
+    id: number;
+    name: string;
+    parentCategoryId: number | null;
+    subCategories: ICategory[];
+  };
 
   /** ------------------ Shared ------------------ */
 
   interface ICountResponse {
     totalCount?: number | null;
-  }
+  };
 
   /** ------------------ Types ------------------ */
   type ListProductStatusType =

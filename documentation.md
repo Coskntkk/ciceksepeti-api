@@ -127,3 +127,16 @@ Gets an order by orderNo.
 ```
 
 ***
+
+## Category
+
+  - `ciceksepeti.category.list()`
+
+Lists categories on Çiçeksepeti.
+
+- Response:
+```js
+{
+  categories: [],
+}
+```

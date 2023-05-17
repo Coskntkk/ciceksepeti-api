@@ -3,6 +3,7 @@
 const map = {
     product: 'product',
     order: 'order',
+    category: 'category',
 };
 
 /**

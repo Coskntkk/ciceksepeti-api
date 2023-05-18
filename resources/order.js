@@ -31,11 +31,10 @@ function Order(ciceksepeti) {
  */
 Order.prototype.list = async function list(params) {
     params = params || {}
-
-    if (!params.pageSize || params.pageSize > 100 || params.pageSize < 1) {
+    if (params.pageSize === undefined || params.pageSize === null || params.pageSize > 100 || params.pageSize < 1) {
         throw new Error('Page size (pageSize) is required and must be between 1 and 100.')
     }
-    if (!!params.page || params.page < 0) {
+    if (params.page === undefined || params.page === null || params.page < 0) {
         throw new Error('Page (page) is required and must be equal or greater than 0.')
     }
     if ((!params.startDate || !params.endDate) && !params.orderNo && !params.orderItemNo) {

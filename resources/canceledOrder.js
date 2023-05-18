@@ -33,7 +33,7 @@ CanceledOrder.prototype.list = async function list(params) {
     params = params || {}
     if (params.page === undefined || params.page === null || isNaN(params.page) || params.page < 0)
         throw new Error('Page (page) is required and must be greater than 0')
-    if (!params.pageSize || isNaN(params.pageSize) || params.pageSize < 1)
+    if (params.pageSize === undefined || params.pageSize === null || isNaN(params.pageSize) || params.pageSize < 1)
         throw new Error('Page size (pageSize) is required and must be greater than 0')
     if ((params.startDate && !params.endDate) || (!params.startDate && params.endDate))
         throw new Error('Start date (startDate) and end date (endDate) are must be both present or both absent.')

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 const map = {
     product: 'product',
@@ -6,7 +6,7 @@ const map = {
     category: 'category',
     sellerquestion: 'sellerquestion',
     canceledOrder: 'canceledOrder',
-};
+}
 
 /**
  * Registers resources on the `Ciceksepeti` class.
@@ -19,19 +19,19 @@ function registerAll(Ciceksepeti) {
         Object.defineProperty(Ciceksepeti.prototype, prop, {
             configurable: true,
             get: function get() {
-                const resource = require(`./${map[prop]}`) 
+                const resource = require(`./${map[prop]}`)
 
                 return Object.defineProperty(this, prop, {
-                    value: new resource(this)
-                })[prop];
+                    value: new resource(this),
+                })[prop]
             },
             set: function set(value) {
-                Object.defineProperty(this, prop, { value });
-            }
-        });
-    });
+                Object.defineProperty(this, prop, { value })
+            },
+        })
+    })
 }
 
 module.exports = {
-    registerAll
-};
+    registerAll,
+}

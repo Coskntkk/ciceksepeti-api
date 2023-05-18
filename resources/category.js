@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const Ciceksepeti = require('..');
-const axios = require('axios');
+const Ciceksepeti = require('..')
+const axios = require('axios')
 
 /**
  * Creates a Category instance.
@@ -11,7 +11,7 @@ const axios = require('axios');
  * @public
  */
 function Category(ciceksepeti) {
-    this.ciceksepeti = ciceksepeti;
+    this.ciceksepeti = ciceksepeti
 }
 
 /**
@@ -21,10 +21,14 @@ function Category(ciceksepeti) {
  * @public
  */
 Category.prototype.list = async function list() {
-    let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
-        + '/api'
-        + '/' + this.ciceksepeti.options.apiVersion
-        + '/Categories';
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/Categories'
 
     let config = {
         method: 'get',
@@ -32,16 +36,16 @@ Category.prototype.list = async function list() {
         url: url,
         headers: this.ciceksepeti.baseHeaders,
         maxRedirects: 0,
-    };
+    }
 
     return axios(config)
         .then(function (response) {
-            return response.data;
+            return response.data
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message'] || error.response.data['message']);
-        });
-};
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
 
 /**
  * Returns attributes of a Category.
@@ -51,17 +55,22 @@ Category.prototype.list = async function list() {
  * @public
  */
 Category.prototype.attributes = async function attributes(params) {
-    params = params || {};
+    params = params || {}
     if (!params.id) {
-        throw new Error('Category ID (id) is required.');
+        throw new Error('Category ID (id) is required.')
     }
 
-    let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
-        + '/api'
-        + '/' + this.ciceksepeti.options.apiVersion
-        + '/Categories'
-        + '/' + params.id
-        + '/attributes';
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/Categories' +
+        '/' +
+        params.id +
+        '/attributes'
 
     let config = {
         method: 'get',
@@ -69,15 +78,15 @@ Category.prototype.attributes = async function attributes(params) {
         url: url,
         headers: this.ciceksepeti.baseHeaders,
         maxRedirects: 0,
-    };
+    }
 
     return axios(config)
         .then(function (response) {
-            return response.data;
+            return response.data
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message'] || error.response.data['message']);
-        });
-};
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
 
-module.exports = Category;
+module.exports = Category

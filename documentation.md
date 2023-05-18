@@ -13,7 +13,7 @@ Lists products on Çiçeksepeti.
 | --- | --- | --- |
 | status | false | enum: 'draft', 'waiting_for_approval', 'published', 'rejected', 'passive', 'published_waiting_for_approval', 'out_of_stock'  |
 | page | false | number |
-| limit | false | number |
+| pageSize | false | number |
 | sortBy | false | enum: 'name_asc', 'name_desc', 'stock_asc', 'stock_desc', 'price_asc', 'price_desc', 'created_date_asc', 'created_date_desc' |
 | stockCode | false | string |
 | variantName | false | string |
@@ -171,6 +171,29 @@ Gets seller questions on Çiçeksepeti.
 {
   items: item[],
   hasNextPage: true,
+}
+```
+
+***
+
+## Canceled Order
+
+  - `ciceksepeti.canceledOrder.list([params])`
+
+Gets canceled orders on Çiçeksepeti.
+
+| param | required | type |
+| --- | --- | --- |
+| orderItemStatus | false | enum: "return_started", "return_in_cargo", "return_in_supplier", "return_waiting_for_supplier_approval" | 
+| pageSize | true | number | 
+| page | true | number | 
+| startDate | false | string | 
+| endDate | false | string | 
+
+- Response:
+```js
+{
+  orderItemsList: orderItem[],
 }
 ```
 

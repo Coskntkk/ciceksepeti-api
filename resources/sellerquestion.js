@@ -1,8 +1,8 @@
 'use strict';
 
-const moment = require('moment');
 const Ciceksepeti = require('..');
 const axios = require('axios');
+const moment = require('moment');
 
 /**
  * Creates a SellerQuestion instance.
@@ -74,7 +74,7 @@ SellerQuestion.prototype.list = async function list(params) {
             return response.data;
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message']);
+            throw new Error(error.response.data['Message'] || error.response.data['message']);
         });
 };
 

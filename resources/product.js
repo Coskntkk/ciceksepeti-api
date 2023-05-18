@@ -50,7 +50,7 @@ Product.prototype.list = async function list(params) {
         + '/Products?'
         + (params.status ? `&ProductStatus=${productStatuses[params.status]}` : '')
         + (params.page ? `&Page=${params.page}` : '')
-        + (params.limit ? `&PageSize=${params.limit}` : '')
+        + (params.pageSize ? `&PageSize=${params.pageSize}` : '')
         + (params.sortBy ? `&SortMethod=${sortMethods[params.sortBy]}` : '')
         + (params.stockCode ? `&StockCode=${params.stockCode}` : '')
         + (params.variantName ? `&VariantName=${params.variantName}` : '');
@@ -68,7 +68,7 @@ Product.prototype.list = async function list(params) {
             return response.data;
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message']);
+            throw new Error(error.response.data['Message'] || error.response.data['message']);
         });
 };
 
@@ -104,7 +104,7 @@ Product.prototype.count = async function count(params) {
             };
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message']);
+            throw new Error(error.response.data['Message'] || error.response.data['message']);
         });
 };
 
@@ -138,7 +138,7 @@ Product.prototype.get = async function get(params) {
             return response.data.products[0];
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message']);
+            throw new Error(error.response.data['Message'] || error.response.data['message']);
         });
 };
 

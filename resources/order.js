@@ -1,6 +1,7 @@
 'use strict';
 
 const axios = require('axios');
+const moment = require('moment');
 
 const statusIds = new Object({
     'new': 1,
@@ -40,6 +41,20 @@ Order.prototype.list = async function list(params) {
     if ((!params.startDate || !params.endDate) && (!params.orderNo && !params.orderItemNo)) {
         throw new Error('Start date (startDate) and end date (endDate) are required if order no (orderNo) and order item no (orderItemNo) are not provided.');
     }
+    if (params.startDate && params.endDate) {
+        let date1 = moment(params.startDate);
+        let date2 = moment(params.endDate);
+        if (!date1.isValid() || !date2.isValid()) {
+            throw new Error('Start date (startDate) or end date (endDate) are not valid.');
+        }
+        if (date1.isAfter(date2)) {
+            throw new Error('Start date (startDate) cannot be after end date (endDate).');
+        }
+        let diff = date2.diff(date1, 'days');
+        if (diff > 14) {
+            throw new Error('The difference between start date (startDate) and end date (endDate) cannot be more than 14 days.');
+        }
+    }
 
     if (params.status) {
         params.status = statusIds[params.status];
@@ -68,7 +83,8 @@ Order.prototype.list = async function list(params) {
             };
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message']);
+            console.log(error.response.data);
+            throw new Error(error.response.data['Message'] || error.response.data['message']);
         });
 };
 
@@ -113,7 +129,7 @@ Order.prototype.count = async function count(params) {
             };
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message']);
+            throw new Error(error.response.data['Message'] || error.response.data['message']);
         });
 };
 
@@ -148,7 +164,7 @@ Order.prototype.get = async function get(params) {
             return response.data['supplierOrderListWithBranch'][0];
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message']);
+            throw new Error(error.response.data['Message'] || error.response.data['message']);
         });
 };
 

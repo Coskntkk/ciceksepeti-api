@@ -27,28 +27,36 @@ declare class Ciceksepeti {
   constructor(
     config: Ciceksepeti.ICiceksepetiConfig,
   );
-  callLimits: Ciceksepeti.ICallLimits;
-  // abandonedCheckouts
-  on(
-    event: 'callLimits',
-    callback: (limits: Ciceksepeti.ICallLimits) => void
-  ): Ciceksepeti;
   product: {
+    /** Returns a list of products. */
     list: (params?: Ciceksepeti.IListProductsParams) => Promise<Ciceksepeti.IListProductResponse>;
+    /** Returns the number of products. */
     count: (params?: Ciceksepeti.ICountProductsParams) => Promise<Ciceksepeti.ICountResponse>;
+    /** Returns the details of a product. */
     get: (params: Ciceksepeti.IGetProductParams) => Promise<Ciceksepeti.IProduct>;
   };
   order: {
+    /** Returns a list of orders. */
     list: (params?: Ciceksepeti.IListOrdersParams) => Promise<Ciceksepeti.IListOrdersResponse>;
+    /** Returns the number of orders. */
     count: (params?: Ciceksepeti.ICountOrdersParams) => Promise<Ciceksepeti.ICountResponse>;
+    /** Returns the details of an order. */
     get: (params: Ciceksepeti.IGetOrderParams) => Promise<Ciceksepeti.IOrder>;
   };
   category: {
+    /** Returns a list of categories. */
     list: () => Promise<Ciceksepeti.IListCategoriesResponse>;
+    /** Returns attributes of a category. */
     attributes: (params: Ciceksepeti.ICategoryAttributesParams) => Promise<Ciceksepeti.ICategoryAttributesResponse>;
   };
+  /** Questions and Answers of the product on Çiçeksepeti */
   sellerquestion: {
+    /** Returns a list of seller questions. */
     list: (params?: Ciceksepeti.IListSellerQuestionsParams) => Promise<Ciceksepeti.IListSellerQuestionsResponse>;
+  };
+  canceledOrder: {
+    /** Returns a list of canceled orders. */
+    list: (params?: Ciceksepeti.IListCanceledOrdersParams) => Promise<Ciceksepeti.IListCanceledOrdersResponse>;
   };
 }
 
@@ -65,29 +73,25 @@ declare namespace Ciceksepeti {
     // maxRetryAfter?: number;
   }
 
-  export interface ICallLimits {
-    remaining: number;
-    current: number;
-    max: number;
-  }
-
   /** ------------------ Products ------------------ */
 
-  /** List Products */
+  /** List Product Params */
   interface IListProductsParams {
     status?: ListProductStatusType | ListProductStatusType[] | null;
     page?: number | null;
-    limit?: number | null;
+    pageSize?: number | null;
     sortBy?: ListProductSortByType | null;
     stockCode?: string | null;
     variantName?: string | null;
   }
 
+  /** List Product Response */
   interface IListProductResponse {
     totalCount?: number | null;
     products?: IProduct[] | null;
   }
 
+  /** Product */
   interface IProduct {
     productName?: string | null;
     productCode?: string | null;
@@ -113,6 +117,7 @@ declare namespace Ciceksepeti {
     attributes?: IProductAttribute[] | null;
   }
 
+  /** Product Attribute */
   interface IProductAttribute {
     id?: number | null;
     name?: string | null;
@@ -125,45 +130,58 @@ declare namespace Ciceksepeti {
     variantName?: string | null;
   }
 
-  /** Get Product */
+  /** Get Product Params */
   interface IGetProductParams {
     stockCode: string;
   }
 
   /** ------------------ Orders ------------------ */
 
-  /** List Orders */
+  /** List Orders Params */
   interface IListOrdersParams {
+    /** Get orders created after this date. */
     startDate?: string | null;
+    /** Get orders created before this date. */
     endDate?: string | null;
+    /** Number of orders to return per page. */
     pageSize: number | null;
+    /** Page number of results to return. */
     page: number | null;
+    /** Get orders with this status. Options: *new*, *preparing*, *shipped*, *will_be_shipped*, *delivered* */
     status?: ListOrderStatusType | ListOrderStatusType[] | null;
+    /** Get order by this order number. */
     orderNo?: number | null;
+    /** Get order by this order item number. */
     orderItemNo?: number | null;
+    /** Get orders with order status. */
     isOrderStatusActive?: boolean | null;
   }
 
+  /** List Orders Response */
   interface IListOrdersResponse {
     totalCount?: number | null;
     totalPages: number | null;
     orders?: IOrder[] | null;
   }
 
-  /** Count Orders */
+  /** Count Orders Params */
   interface ICountOrdersParams {
+    /** Count orders created after this date. */
     startDate: string | null;
+    /** Count orders created before this date. */
     endDate: string | null;
+    /** Count orders with this status. Options: *new*, *preparing*, *shipped*, *will_be_shipped*, *delivered* */
     status?: ListOrderStatusType | ListOrderStatusType[] | null;
     isOrderStatusActive?: boolean | null;
   }
 
-  /** Get Order */
+  /** Get Order Params */
   interface IGetOrderParams {
     orderNo: number;
     orderItemNo?: number;
   }
 
+  /* Order */
   interface IOrder {
     branchId?: number | null;
     customerId?: number | null;
@@ -245,6 +263,7 @@ declare namespace Ciceksepeti {
     promotionDescription?: string | null;
   }
 
+  /* Order Item Text List Model */
   interface IOrderItemTextListModel {
     text?: string | null;
     value?: string | null;
@@ -252,11 +271,12 @@ declare namespace Ciceksepeti {
 
   /** ------------------ Categories ------------------ */
 
-  /** List Categories */
+  /** List Categories Params */
   interface IListCategoriesResponse {
     categories?: ICategory[] | null;
   }
 
+  /** Category */
   interface ICategory {
     id: number;
     name: string;
@@ -264,17 +284,20 @@ declare namespace Ciceksepeti {
     subCategories: ICategory[];
   }
 
-  /** Category Attributes */
+  /** Category Attributes Params */
   interface ICategoryAttributesParams {
+    /** Id of the category */
     id: number;
   }
 
+  /** Category Attributes Response */
   interface ICategoryAttributesResponse {
     categoryId: number;
     categoryName: string;
     categoryAttributes: ICategoryAttribute[];
   }
 
+  /** Category Attribute */
   interface ICategoryAttribute {
     attributeId: number;
     attributeName: string;
@@ -284,6 +307,7 @@ declare namespace Ciceksepeti {
     attributeValues: ICategoryAttributeValue[];
   }
 
+  /** Category Attribute Value */
   interface ICategoryAttributeValue {
     id: number;
     name: string;
@@ -291,12 +315,17 @@ declare namespace Ciceksepeti {
 
   /** ------------------ Seller Questions ------------------ */
 
-  /** List Seller Questions */
+  /** List Seller Questions Params */
   interface IListSellerQuestionsParams {
+    /** Id of the question */
     id?: number | null;
+    /** Id of the product */
     productCode?: string | null;
+    /** Filter by if the question is answered or not */
     answered?: boolean | null;
+    /** Filter by if the created date is between start and end date */
     startDate?: string | null;
+    /** Filter by if the created date is between start and end date */
     endDate?: string | null;
     branchActionId?: number | null;
     agentActionId?: number | null;
@@ -306,11 +335,13 @@ declare namespace Ciceksepeti {
     page: number | null;
   }
 
+  /** List Seller Questions Response */
   interface IListSellerQuestionsResponse {
     items: ISellerQuestion[];
     hasNextPage: boolean;
   }
 
+  /** Seller Question */
   interface ISellerQuestion {
     id?: string | null;
     product?: ISellerQuestionProduct | null;
@@ -328,6 +359,7 @@ declare namespace Ciceksepeti {
     approve?: boolean | null;
   }
 
+  /** Seller Question Product */
   interface ISellerQuestionProduct {
     code?: string | null;
     name?: string | null;
@@ -335,13 +367,37 @@ declare namespace Ciceksepeti {
     imageUrl?: string | null;
   }
 
+  /** ------------------ Canceled Orders ------------------ */
+
+  /** List Canceled Orders Params */
+  interface IListCanceledOrdersParams {
+    /** Order item status. Must be one of *return_started*, *return_in_cargo*, *return_in_supplier*, *return_waiting_for_supplier_approval* if specified. */
+    orderItemStatus?: ListCanceledOrderStatusType | null;
+    /** Item count per page. */
+    pageSize: number;
+    /** Page number. Starts from *0*. */
+    page: number;
+    /** Start date of the filter. Returns last 30 days if not specified. */
+    startDate?: string;
+    /** End date of the filter. Returns last 30 days if not specified. */
+    endDate?: string;
+  }
+
+  /** List Canceled Orders Response */
+  interface IListCanceledOrdersResponse {
+    /** List of the canceled orders. */
+    orderItemsList: any[];
+  }
+
   /** ------------------ Shared ------------------ */
 
   interface ICountResponse {
+    /** Total count of the items. */
     totalCount?: number | null;
   }
 
   /** ------------------ Types ------------------ */
+  /** Product Status Type */
   type ListProductStatusType =
     'draft' |
     'waiting_for_approval' |
@@ -351,6 +407,7 @@ declare namespace Ciceksepeti {
     'published_waiting_for_approval' |
     'out_of_stock';
 
+  /** Product Sort By Type */
   type ListProductSortByType =
     'name_asc' |
     'name_desc' |
@@ -361,10 +418,18 @@ declare namespace Ciceksepeti {
     'created_date_asc' |
     'created_date_desc';
 
+  /** Order Status Type */
   type ListOrderStatusType =
     'new' |
     'preparing' |
     'shipped' |
     'will_be_shipped' |
     'delivered';
+
+  /** Canceled Order Status Type */
+  type ListCanceledOrderStatusType =
+    "return_started" |
+    "return_in_cargo" |
+    "return_in_supplier" |
+    "return_waiting_for_supplier_approval";
 }

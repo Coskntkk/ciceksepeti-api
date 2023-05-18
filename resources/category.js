@@ -39,7 +39,7 @@ Category.prototype.list = async function list() {
             return response.data;
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message']);
+            throw new Error(error.response.data['Message'] || error.response.data['message']);
         });
 };
 
@@ -76,7 +76,7 @@ Category.prototype.attributes = async function attributes(params) {
             return response.data;
         })
         .catch(function (error) {
-            throw new Error(error.response.data['Message']);
+            throw new Error(error.response.data['Message'] || error.response.data['message']);
         });
 };
 

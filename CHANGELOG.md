@@ -16,6 +16,19 @@ Planned changes. (May be in different versions)
 ### Changed
 ### Fixed
 
+## [1.0.6] - 2023-05-18
+Added methods, type improvements, error handling improvements.
+### Added
+- Get canceled orders method added.
+- Date validation added for get canceled orders method.
+- Date validation added for list orders method.
+- Types improved.
+### Changed
+- Changed some parameter names for better compatibility with Çiçeksepeti Marketplace API. (limit -> pageSize)
+- Documentation (documentation.md) updated for new methods and parameter names.
+### Fixed
+- Error handling improved.
+
 ## [1.0.5] - 2023-05-18
 Added methods, type improvements.
 ### Added

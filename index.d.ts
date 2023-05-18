@@ -45,6 +45,10 @@ declare class Ciceksepeti {
   };
   category: {
     list: () => Promise<Ciceksepeti.IListCategoriesResponse>;
+    attributes: (params: Ciceksepeti.ICategoryAttributesParams) => Promise<Ciceksepeti.ICategoryAttributesResponse>;
+  };
+  sellerquestion: {
+    list: (params?: Ciceksepeti.IListSellerQuestionsParams) => Promise<Ciceksepeti.IListSellerQuestionsResponse>;
   };
 }
 
@@ -59,13 +63,13 @@ declare namespace Ciceksepeti {
     // timeout?: number;
     // maxRetries?: number;
     // maxRetryAfter?: number;
-  };
+  }
 
   export interface ICallLimits {
     remaining: number;
     current: number;
     max: number;
-  };
+  }
 
   /** ------------------ Products ------------------ */
 
@@ -77,12 +81,12 @@ declare namespace Ciceksepeti {
     sortBy?: ListProductSortByType | null;
     stockCode?: string | null;
     variantName?: string | null;
-  };
+  }
 
   interface IListProductResponse {
     totalCount?: number | null;
     products?: IProduct[] | null;
-  };
+  }
 
   interface IProduct {
     productName?: string | null;
@@ -107,24 +111,24 @@ declare namespace Ciceksepeti {
     isActive?: boolean | null;
     images?: string[] | null;
     attributes?: IProductAttribute[] | null;
-  };
+  }
 
   interface IProductAttribute {
     id?: number | null;
     name?: string | null;
     textLength?: number | null;
-  };
+  }
 
   /** Count Products */
   interface ICountProductsParams {
     status?: ListProductStatusType | ListProductStatusType[] | null;
     variantName?: string | null;
-  };
+  }
 
   /** Get Product */
   interface IGetProductParams {
     stockCode: string;
-  };
+  }
 
   /** ------------------ Orders ------------------ */
 
@@ -138,13 +142,13 @@ declare namespace Ciceksepeti {
     orderNo?: number | null;
     orderItemNo?: number | null;
     isOrderStatusActive?: boolean | null;
-  };
+  }
 
   interface IListOrdersResponse {
     totalCount?: number | null;
     totalPages: number | null;
     orders?: IOrder[] | null;
-  };
+  }
 
   /** Count Orders */
   interface ICountOrdersParams {
@@ -152,13 +156,13 @@ declare namespace Ciceksepeti {
     endDate: string | null;
     status?: ListOrderStatusType | ListOrderStatusType[] | null;
     isOrderStatusActive?: boolean | null;
-  };
+  }
 
   /** Get Order */
   interface IGetOrderParams {
     orderNo: number;
     orderItemNo?: number;
-  };
+  }
 
   interface IOrder {
     branchId?: number | null;
@@ -239,32 +243,103 @@ declare namespace Ciceksepeti {
     extraProductTotalQuantity?: number | null;
     extraProducts?: any[] | null;
     promotionDescription?: string | null;
-  };
+  }
 
   interface IOrderItemTextListModel {
     text?: string | null;
     value?: string | null;
-  };
+  }
 
   /** ------------------ Categories ------------------ */
 
   /** List Categories */
   interface IListCategoriesResponse {
     categories?: ICategory[] | null;
-  };
+  }
 
   interface ICategory {
     id: number;
     name: string;
     parentCategoryId: number | null;
     subCategories: ICategory[];
-  };
+  }
+
+  /** Category Attributes */
+  interface ICategoryAttributesParams {
+    id: number;
+  }
+
+  interface ICategoryAttributesResponse {
+    categoryId: number;
+    categoryName: string;
+    categoryAttributes: ICategoryAttribute[];
+  }
+
+  interface ICategoryAttribute {
+    attributeId: number;
+    attributeName: string;
+    required: boolean;
+    varianter: boolean;
+    type: string;
+    attributeValues: ICategoryAttributeValue[];
+  }
+
+  interface ICategoryAttributeValue {
+    id: number;
+    name: string;
+  }
+
+  /** ------------------ Seller Questions ------------------ */
+
+  /** List Seller Questions */
+  interface IListSellerQuestionsParams {
+    id?: number | null;
+    productCode?: string | null;
+    answered?: boolean | null;
+    startDate?: string | null;
+    endDate?: string | null;
+    branchActionId?: number | null;
+    agentActionId?: number | null;
+    approve?: boolean | null;
+    sortType?: number | null;
+    sortField?: number | null;
+    page: number | null;
+  }
+
+  interface IListSellerQuestionsResponse {
+    items: ISellerQuestion[];
+    hasNextPage: boolean;
+  }
+
+  interface ISellerQuestion {
+    id?: string | null;
+    product?: ISellerQuestionProduct | null;
+    question?: string | null;
+    answer?: string | null;
+    questionDate?: string | null;
+    answered?: boolean | null;
+    agentActionId?: number | null;
+    agentActionText?: string | null;
+    branchActionId?: number | null;
+    branchActionDetailId?: number | null;
+    branchDescription?: string | null;
+    agentDescription?: string | null;
+    answerDate?: string | null;
+    approve?: boolean | null;
+  }
+
+  interface ISellerQuestionProduct {
+    code?: string | null;
+    name?: string | null;
+    url?: string | null;
+    imageUrl?: string | null;
+  }
 
   /** ------------------ Shared ------------------ */
 
   interface ICountResponse {
     totalCount?: number | null;
-  };
+  }
 
   /** ------------------ Types ------------------ */
   type ListProductStatusType =

@@ -32,13 +32,13 @@ Order.prototype.list = async function list(params) {
     params = params || {}
     
     if (!params.pageSize || params.pageSize > 100 || params.pageSize < 1) {
-        throw new Error('pageSize is required and must be between 1 and 100.');
+        throw new Error('Page size (pageSize) is required and must be between 1 and 100.');
     }
     if (!!params.page || params.page < 0) {
-        throw new Error('page is required and must be equal or greater than 0.');
+        throw new Error('Page (page) is required and must be equal or greater than 0.');
     }
     if ((!params.startDate || !params.endDate) && (!params.orderNo && !params.orderItemNo)) {
-        throw new Error('startDate and endDate are required if orderNo and orderItemNo are not provided.');
+        throw new Error('Start date (startDate) and end date (endDate) are required if order no (orderNo) and order item no (orderItemNo) are not provided.');
     }
 
     if (params.status) {
@@ -85,7 +85,7 @@ Order.prototype.count = async function count(params) {
     params.page = 0;
     
     if (!params.startDate || !params.endDate) {
-        throw new Error('startDate and endDate are required.');
+        throw new Error('Start date (startDate) and end date (endDate) are required.');
     }
 
     if (params.status) {

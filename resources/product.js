@@ -117,7 +117,7 @@ Product.prototype.count = async function count(params) {
  */
 Product.prototype.get = async function get(params) {
     params = params || {};
-    if (!params.stockCode) throw new Error('stockCode is required.');
+    if (!params.stockCode) throw new Error('Stock code (stockCode) is required.');
 
     let url = this.ciceksepeti.baseUrl.protocol + '//' + this.ciceksepeti.baseUrl.hostname
         + '/api'

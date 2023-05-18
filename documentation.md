@@ -1,5 +1,8 @@
 # Ciceksepeti API Documentation
 
+This is a reference for methods available when using the ciçeksepeti-api package.
+See the [Çiçeksepeti Marketplace API reference](https://ciceksepeti.dev) for more details.
+
 ## Product
 
   - `ciceksepeti.product.list([params])`
@@ -140,3 +143,37 @@ Lists categories on Çiçeksepeti.
   categories: [],
 }
 ```
+
+***
+
+## Seller Question
+
+  - `ciceksepeti.sellerquestion.list([params])`
+
+Gets seller questions on Çiçeksepeti.
+
+| param | required | type |
+| --- | --- | --- |
+| id | false | number | 
+| productCode | false | string | 
+| answered | false | boolean | 
+| startDate | false | string | 
+| endDate | false | string | 
+| branchActionId | false| number |
+| agentActionId | false | number | 
+| approve | false | boolean | 
+| sortType | false | number | 
+| sortField | false | number | 
+| page | false | number | 
+
+- Response:
+```js
+{
+  items: item[],
+  hasNextPage: true,
+}
+```
+
+***
+
+where `params` is a plain JavaScript object. 

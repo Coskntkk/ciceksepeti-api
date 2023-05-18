@@ -16,6 +16,16 @@ Planned changes. (May be in different versions)
 ### Changed
 ### Fixed
 
+## [1.0.5] - 2023-05-18
+Added methods, type improvements.
+### Added
+- Get seller question method added.
+- Date validation added for get seller question method.
+### Changed
+- Documentation (documentation.md) updated.
+### Fixed
+- Error handling improved.
+
 ## [1.0.4] - 2023-05-17
 Minor fixes.
 ### Added

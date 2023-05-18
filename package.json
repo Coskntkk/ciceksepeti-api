@@ -1,6 +1,6 @@
 {
   "name": "ciceksepeti-api",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Çiçeksepeti Marketplace API bindings for Node.js",
   "main": "index.js",
   "engines": {
@@ -12,7 +12,8 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "axios": "^1.4.0"
+    "axios": "^1.4.0",
+    "moment": "^2.29.4"
   },
   "repository": "Coskntkk/ciceksepeti-api",
   "keywords": [

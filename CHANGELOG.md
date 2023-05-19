@@ -22,6 +22,19 @@ Planned changes. (May be in different versions)
 
 ### Fixed
 
+## [1.0.7] - 2023-05-19
+
+New methods added. Happy Commemoration of Atatürk, Youth and Sports Day!
+
+### Added
+
+-   Update stock and price method added.
+-   Check batch status method added.
+
+### Changed
+
+### Fixed
+
 ## [1.0.6] - 2023-05-18
 
 Added methods, type improvements, error handling improvements.

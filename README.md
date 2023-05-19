@@ -53,7 +53,7 @@ View the [documentation](https://github.com/Coskntkk/ciceksepeti-api/blob/main/d
 
 Contributions are always welcome!
 
-See `contributing.md` for ways to get started.
+See [`CONTRIBUTING.md`](https://github.com/Coskntkk/ciceksepeti-api/blob/main/CONTRIBUTING.md) for ways to get started.
 
 ## License
 

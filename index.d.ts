@@ -32,6 +32,12 @@ declare class Ciceksepeti {
         count: (params?: Ciceksepeti.ICountProductsParams) => Promise<Ciceksepeti.ICountResponse>
         /** Returns the details of a product. */
         get: (params: Ciceksepeti.IGetProductParams) => Promise<Ciceksepeti.IProduct>
+        /** Updates stock or price of a product. */
+        updateStockOrPrice: (
+            items: Ciceksepeti.IUpdateStockOrPriceItem[]
+        ) => Promise<Ciceksepeti.IUpdateStockOrPriceResponse>
+        /** Returns the status of a product process. */
+        batchStatus: (batchId: string) => Promise<Ciceksepeti.IBatchStatusResponse>
     }
     order: {
         /** Returns a list of orders. */
@@ -63,6 +69,7 @@ declare class Ciceksepeti {
  */
 declare namespace Ciceksepeti {
     export interface ICiceksepetiConfig {
+        /** Api Key */
         apiKey: string
         // apiVersion?: string;
         // timeout?: number;
@@ -74,11 +81,17 @@ declare namespace Ciceksepeti {
 
     /** List Product Params */
     interface IListProductsParams {
+        /** Get products with this status. Options: *draft*, *waiting_for_approval*, *published*, *rejected*, *passive*, *published_waiting_for_approval*, *out_of_stock* */
         status?: ListProductStatusType | ListProductStatusType[] | null
+        /** Page number. */
         page?: number | null
+        /** Items per page. */
         pageSize?: number | null
+        /** Sort by. Options: *name_asc*, *name_desc*, *stock_asc*, *stock_desc*, *price_asc*, *price_desc*, *created_date_asc*, *created_date_desc* */
         sortBy?: ListProductSortByType | null
+        /** Get products with this stock code. */
         stockCode?: string | null
+        /** Get products with this variant name. */
         variantName?: string | null
     }
 
@@ -123,13 +136,58 @@ declare namespace Ciceksepeti {
 
     /** Count Products */
     interface ICountProductsParams {
+        /** Count products with this status. Options: *draft*, *waiting_for_approval*, *published*, *rejected*, *passive*, *published_waiting_for_approval*, *out_of_stock* */
         status?: ListProductStatusType | ListProductStatusType[] | null
+        /** Count products with this variant name. */
         variantName?: string | null
     }
 
     /** Get Product Params */
     interface IGetProductParams {
+        /** Stock code of the product. *Required* */
         stockCode: string
+    }
+
+    /** Update Stock or Price Item */
+    interface IUpdateStockOrPriceItem {
+        /** Stock code of the product. *Required* */
+        stockCode: string
+        /** Quantity of the product. */
+        stockQuantity?: number | null
+        /** Sales price of the product. */
+        salesPrice?: number | null
+        /** List price of the product. */
+        listPrice?: number | null
+    }
+
+    /** Update Stock or Price Response */
+    interface IUpdateStockOrPriceResponse {
+        batchId?: string | null
+    }
+
+    /** Batch Status Response */
+    interface IBatchStatusResponse {
+        batchId?: string | null
+        itemCount?: number | null
+        items?: IBatchStatusItem[] | null
+    }
+
+    /** Batch Status Item */
+    interface IBatchStatusItem {
+        itemId?: string | null
+        data?: IBatchStatusItemData | null
+        status?: string | null
+        failureReasons?: string[] | null
+        lastModificationDate?: string | null
+    }
+
+    /** Batch Status Item Data */
+    interface IBatchStatusItemData {
+        siteCode?: string | null
+        stockCode?: string | null
+        quantity?: number | null
+        listPrice?: number | null
+        salesPrice?: number | null
     }
 
     /** ------------------ Orders ------------------ */
@@ -174,7 +232,9 @@ declare namespace Ciceksepeti {
 
     /** Get Order Params */
     interface IGetOrderParams {
+        /** Order ID. *Required* */
         orderNo: number
+        /** Order item ID. */
         orderItemNo?: number
     }
 

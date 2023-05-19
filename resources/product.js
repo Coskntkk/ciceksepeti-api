@@ -154,4 +154,95 @@ Product.prototype.get = async function get(params) {
         })
 }
 
+/**
+ * Updates stock or price of a product.
+ *
+ * @param {Array} items Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Product.prototype.updateStockOrPrice = async function updateStockOrPrice(items) {
+    if (!items) throw new Error('Items are required.')
+    if (!Array.isArray(items)) throw new Error('Items must be an array.')
+    if (items.length === 0) throw new Error('Items must not be empty.')
+    items.forEach((item, i) => {
+        if (!item.stockCode) throw new Error('Stock code (stockCode) is required. For item ' + i) + '.'
+        if (
+            item.quantity !== undefined &&
+            item.quantity !== null &&
+            item.salesPrice !== undefined &&
+            item.salesPrice !== null
+        )
+            throw new Error("Quantity (quantity) and sales price (salesPrice) can't use together. For item " + i + '.')
+        if (item.listPrice && !item.salesPrice)
+            throw new Error('List price (listPrice) must be given with sales price (salesPrice). For item ' + i + '.')
+    })
+
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/Products/price-and-stock'
+
+    let config = {
+        method: 'put',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+        data: {
+            items: items,
+        },
+    }
+
+    return axios(config)
+        .then(function (response) {
+            return response.data
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
+
+/**
+ * Returns status of a product process.
+ *
+ * @param {string} batchId Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Product.prototype.batchStatus = async function batchStatus(batchId) {
+    if (!batchId) throw new Error('Batch id (batchId) is required.')
+    if (typeof batchId !== 'string') throw new Error('Batch id (batchId) must be a string.')
+
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/Products/batch-status/' +
+        batchId
+
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+    }
+
+    return axios(config)
+        .then(function (response) {
+            return response.data
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
+
 module.exports = Product

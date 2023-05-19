@@ -67,6 +67,59 @@ Finds a product by stock code.
 
 ---
 
+-   `ciceksepeti.product.updateStockOrPrice([items])`
+
+Updates stock or price of products.
+
+| param | required | type          |
+| ----- | -------- | ------------- |
+| items | true     | array of item |
+
+where item is:
+
+```js
+{
+  stockCode: '...',
+  stockQuantity: 123,
+  listPrice: 123,
+  salesPrice: 123,
+}
+```
+
+**Note**: You can't update stock or price or both.
+
+**Note**: You can't update listprice whitout salesprice.
+
+-   Response:
+
+```js
+{
+    batchId: '...'
+}
+```
+
+---
+
+-   `ciceksepeti.product.batchStatus(batchId)`
+
+Checks batch status.
+
+| param   | required | type   |
+| ------- | -------- | ------ |
+| batchId | true     | string |
+
+where batchId is a string returned from `ciceksepeti.product.updateStockOrPrice()`.
+
+-   Response:
+
+```js
+{
+  batchId: '...',
+  itemCount: 123,
+  items: [],
+}
+```
+
 ## Order
 
 -   `ciceksepeti.order.list([params])`

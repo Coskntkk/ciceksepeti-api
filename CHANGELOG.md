@@ -22,6 +22,21 @@ Planned changes. (May be in different versions)
 
 ### Fixed
 
+## [1.0.8] - 2023-05-20
+
+New methods added.
+
+### Added
+
+-   Create product method added.
+-   Update product method added.
+-   Approve or reject canceled order method added.
+-   Canceled order product received method added.
+
+### Changed
+
+### Fixed
+
 ## [1.0.7] - 2023-05-19
 
 New methods added. Happy Commemoration of Atatürk, Youth and Sports Day!

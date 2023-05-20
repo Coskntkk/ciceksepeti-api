@@ -23,6 +23,19 @@ const sortMethods = new Object({
     created_date_desc: 8,
 })
 
+const deliveryTypes = new Object({
+    with_service: 1,
+    with_cargo: 2,
+    with_service_and_cargo: 3,
+})
+
+const deliveryMessageTypes = new Object({
+    cicek_service: 1,
+    gift_cargo_same_day: 4,
+    gift_cargo_1_3_days: 5,
+    gift_cargo_1_2_days: 18,
+})
+
 /**
  * Creates a Product instance.
  *
@@ -155,7 +168,7 @@ Product.prototype.get = async function get(params) {
 }
 
 /**
- * Updates stock or price of a product.
+ * Updates stock or price of products.
  *
  * @param {Array} items Query parameters
  * @return {Promise} Promise that resolves with the result
@@ -195,6 +208,120 @@ Product.prototype.updateStockOrPrice = async function updateStockOrPrice(items) 
         maxRedirects: 0,
         data: {
             items: items,
+        },
+    }
+
+    return axios(config)
+        .then(function (response) {
+            return response.data
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
+
+/**
+ * Updates product.
+ *
+ * @param {Array} items Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Product.prototype.update = async function update(items) {
+    if (!items) throw new Error('Items are required.')
+    if (!Array.isArray(items)) throw new Error('Items must be an array.')
+    if (items.length === 0) throw new Error('Items must not be empty.')
+    items.forEach((item, i) => {
+        if (!item.productName) throw new Error('Product code (stockCode) is required. For item ' + i) + '.'
+        if (!item.stockCode) throw new Error('Stock code (stockCode) is required. For item ' + i) + '.'
+        if (!item.mainProductCode) throw new Error('Main product code (mainProductCode) is required. For item ' + i) + '.'
+        if (!item.isActive) throw new Error('Is active (isActive) is required. For item ' + i) + '.'
+        if (!item.description) throw new Error('Description (description) is required. For item ' + i) + '.'
+        if (!item.deliveryType) throw new Error('Delivery tipe (deliveryType) is required. For item ' + i) + '.'
+        if (!item.deliveryMessageType) throw new Error('Delivery message tipe (deliveryMessageType) is required. For item ' + i) + '.'
+        if (
+            !item.images || item.images.length === 0 || !Array.isArray(item.images)
+        ) throw new Error('Images (images) is required. For item ' + i) + '.'
+
+        item.deliveryType = deliveryTypes[item.deliveryType];
+        item.deliveryMessageType = deliveryMessageTypes[item.deliveryMessageType];
+    })
+
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/Products'
+
+    let config = {
+        method: 'put',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+        data: {
+            products: items,
+        },
+    }
+
+    return axios(config)
+        .then(function (response) {
+            return response.data
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
+
+/**
+ * Creates new product/s on Ciceksepeti.
+ *
+ * @param {Array} items Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Product.prototype.create = async function create(items) {
+    if (!items) throw new Error('Items are required.')
+    if (!Array.isArray(items)) throw new Error('Items must be an array.')
+    if (items.length === 0) throw new Error('Items must not be empty.')
+    items.forEach((item, i) => {
+        if (!item.productName) throw new Error('Product code (stockCode) is required. For item ' + i) + '.'
+        if (!item.mainProductCode) throw new Error('Main product code (mainProductCode) is required. For item ' + i) + '.'
+        if (!item.stockCode) throw new Error('Stock code (stockCode) is required. For item ' + i) + '.'
+        if (!item.categoryId) throw new Error('Category id (categoryId) is required. For item ' + i) + '.'
+        if (!item.description) throw new Error('Description (description) is required. For item ' + i) + '.'
+        if (!item.deliveryType) throw new Error('Delivery tipe (deliveryType) is required. For item ' + i) + '.'
+        if (!item.deliveryMessageType) throw new Error('Delivery message tipe (deliveryMessageType) is required. For item ' + i) + '.'
+        if (
+            !item.images || item.images.length === 0 || !Array.isArray(item.images)
+        ) throw new Error('Images (images) is required. For item ' + i) + '.'
+        if (!item.stockQuantity) throw new Error('Stock quantity (stockQuantity) is required. For item ' + i) + '.'
+        if (!item.salesPrice) throw new Error('Sales price (salesPrice) is required. For item ' + i) + '.'
+
+        item.deliveryType = deliveryTypes[item.deliveryType];
+        item.deliveryMessageType = deliveryMessageTypes[item.deliveryMessageType];
+    })
+
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/Products'
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+        data: {
+            products: items,
         },
     }
 

@@ -42,7 +42,7 @@ Counts products on Çiçeksepeti.
 
 ```js
 {
-    totalCount: 155
+  totalCount: 155
 }
 ```
 
@@ -94,7 +94,97 @@ where item is:
 
 ```js
 {
-    batchId: '...'
+  batchId: '...'
+}
+```
+
+---
+
+-   `ciceksepeti.product.update([items])`
+
+Updates products.
+
+| param | required | type          |
+| ----- | -------- | ------------- |
+| items | true     | array of item |
+
+where item is:
+
+```js
+{
+  productName: "Test urunu", // required
+  mainProductCode: "testmain2", // required
+  stockCode: "test2", // required
+  isActive: true, // required
+  description: "test acıklaması", // required
+  mediaLink: "test",
+  deliveryMessageType: "gift_cargo_same_day", // required
+  deliveryType: "with_cargo", // required
+  barcode: "test123",
+  images: [
+    "test-test-kc6500945-1-392bf4631cf04904a3f0df31a6c10642.jpg"
+  ],
+  attributes: [
+    {
+      "id": 2000353,
+      "valueId": 2010697,
+      "textLength": 0
+    }
+  ]
+}
+```
+
+-   Response:
+
+```js
+{
+  batchId: '...'
+}
+```
+
+---
+
+-   `ciceksepeti.product.create([items])`
+
+Creates new products on Çiçeksepeti.
+
+| param | required | type          |
+| ----- | -------- | ------------- |
+| items | true     | array of item |
+
+where item is:
+
+```js
+{
+  productName: "Test urunu", // required
+  mainProductCode: "testmain2", // required
+  stockCode: "test2", // required
+  description: "test acıklaması", // required
+  mediaLink: "test",
+  deliveryMessageType: "gift_cargo_same_day", // required
+  deliveryType: "with_cargo", // required
+  stockQuantity: 25, // required
+  salesPrice: 56.99, // required
+  listPrice: 99.99, // required
+  barcode: "test123",
+  images: [
+    "test-test-kc6500945-1-392bf4631cf04904a3f0df31a6c10642.jpg"
+  ],
+  attributes: [
+    {
+      "id": 2000353,
+      "valueId": 2010697,
+      "textLength": 0
+    }
+  ]
+}
+```
+
+-   Response:
+
+```js
+{
+  batchId: '...'
 }
 ```
 
@@ -164,7 +254,7 @@ Counts orders on Çiçeksepeti.
 
 ```js
 {
-    totalCount: 123
+  totalCount: 123
 }
 ```
 
@@ -256,6 +346,44 @@ Gets canceled orders on Çiçeksepeti.
 ```js
 {
   orderItemsList: orderItem[],
+}
+```
+
+---
+
+-   `ciceksepeti.canceledOrder.approveOrReject([params])`
+
+Approves or rejects the canceled order item by the seller.
+
+| param           | required | type |
+| --------------- | -------- | -------- |
+| orderItemId | true    | number |
+| process        | true     | enum: 'approve', 'reject' |
+
+-   Response:
+
+```js
+{
+  isSuccess: true,
+  message: ""
+}
+```
+
+---
+
+-   `ciceksepeti.canceledOrder.recieved([params])`
+
+Approves that the order item is received by the seller.
+
+| param           | required | type |
+| --------------- | -------- | -------- |
+| orderItemIds | true    | number[] |
+
+-   Response:
+
+```js
+{
+  orderItems: orderItem[],
 }
 ```
 

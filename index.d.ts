@@ -32,10 +32,14 @@ declare class Ciceksepeti {
         count: (params?: Ciceksepeti.ICountProductsParams) => Promise<Ciceksepeti.ICountResponse>
         /** Returns the details of a product. */
         get: (params: Ciceksepeti.IGetProductParams) => Promise<Ciceksepeti.IProduct>
+        /** Creates products. */
+        create: (items: Ciceksepeti.ICreateProductItem[]) => Promise<Ciceksepeti.IBatchIdResponse>
+        /** Updates products. */
+        update: (items: Ciceksepeti.IUpdateProductItem[]) => Promise<Ciceksepeti.IBatchIdResponse>
         /** Updates stock or price of a product. */
         updateStockOrPrice: (
             items: Ciceksepeti.IUpdateStockOrPriceItem[]
-        ) => Promise<Ciceksepeti.IUpdateStockOrPriceResponse>
+        ) => Promise<Ciceksepeti.IBatchIdResponse>
         /** Returns the status of a product process. */
         batchStatus: (batchId: string) => Promise<Ciceksepeti.IBatchStatusResponse>
     }
@@ -61,6 +65,10 @@ declare class Ciceksepeti {
     canceledOrder: {
         /** Returns a list of canceled orders. */
         list: (params?: Ciceksepeti.IListCanceledOrdersParams) => Promise<Ciceksepeti.IListCanceledOrdersResponse>
+        /** Approves or rejects a canceled order. */
+        approveOrReject: (params: Ciceksepeti.IApproveOrRejectCanceledOrderParams) => Promise<Ciceksepeti.IApproveOrRejectCanceledOrderResponse>
+        /** Approves that the seller has received the returned order item. */
+        recieved: (params: Ciceksepeti.IRecievedCanceledOrderParams) => Promise<Ciceksepeti.IRecievedCanceledOrderResponse>
     }
 }
 
@@ -160,8 +168,8 @@ declare namespace Ciceksepeti {
         listPrice?: number | null
     }
 
-    /** Update Stock or Price Response */
-    interface IUpdateStockOrPriceResponse {
+    /** Batch Id Response */
+    interface IBatchIdResponse {
         batchId?: string | null
     }
 
@@ -188,6 +196,74 @@ declare namespace Ciceksepeti {
         quantity?: number | null
         listPrice?: number | null
         salesPrice?: number | null
+    }
+
+    /** Update Product Params */
+    interface IUpdateProductItem {
+        /** Name of the product. *Required* */
+        productName: string
+        /** Stock code of the product. *Required* */
+        stockCode: string
+        /** Main product code of the product. *Required* */
+        mainProductCode: string
+        /** Active status the product. *Required* */
+        isActive: boolean
+        /** Description of the product. *Required* */
+        description: string
+        /** Media link of the product. */
+        mediaLink?: string | null
+        /** Delivery tipe of the product. *Required*. Options: *with_service*, *with_cargo*, *with_service_and_cargo* */
+        deliveryType: "with_service" | "with_cargo" | "with_service_and_cargo"
+        /** Delivery message type of the product. *Required*. Options: *cicek_service*, *gift_cargo_same_day*, *gift_cargo_1_3_days*, *gift_cargo_1_2_days* */
+        deliveryMessageType: "cicek_service" | "gift_cargo_same_day" | "gift_cargo_1_3_days" | "gift_cargo_1_2_days"
+        /** Images of the product. *Required* */
+        images: string[]
+        /** Attributes of the product. */
+        attributes?: IUpdateProductItemAttribute[] | null
+        /** Barcode of the product. */
+        barcode?: string | null
+    }
+
+    /** Update Product Item Attribute */
+    interface IUpdateProductItemAttribute {
+        /** Id of the attribute. *Required* */
+        id: number
+        /** Value id of the attribute. *Required* */
+        valueId: number
+        /** Text length of the attribute. *Required* */
+        textLength: number
+    }
+
+    /** Create Product Params */
+    interface ICreateProductItem {
+        /** Name of the product. *Required* */
+        productName: string
+        /** Stock code of the product. *Required* */
+        stockCode: string
+        /** Main product code of the product. *Required* */
+        mainProductCode: string
+        /** Category id of the product. *Required* */
+        categoryId: number
+        /** Description of the product. *Required* */
+        description: string
+        /** Media link of the product. */
+        mediaLink?: string | null
+        /** Stock quantity of the product. *Required* */
+        stockQuantity: number
+        /** Sales price of the product. *Required* */
+        salesPrice: number
+        /** List price of the product. *Required* */
+        listPrice?: number | null
+        /** Delivery tipe of the product. *Required*. Options: *with_service*, *with_cargo*, *with_service_and_cargo* */
+        deliveryType: "with_service" | "with_cargo" | "with_service_and_cargo"
+        /** Delivery message type of the product. *Required*. Options: *cicek_service*, *gift_cargo_same_day*, *gift_cargo_1_3_days*, *gift_cargo_1_2_days* */
+        deliveryMessageType: "cicek_service" | "gift_cargo_same_day" | "gift_cargo_1_3_days" | "gift_cargo_1_2_days"
+        /** Images of the product. *Required* */
+        images: string[]
+        /** Attributes of the product. */
+        attributes?: IUpdateProductItemAttribute[] | null
+        /** Barcode of the product. */
+        barcode?: string | null
     }
 
     /** ------------------ Orders ------------------ */
@@ -446,6 +522,44 @@ declare namespace Ciceksepeti {
         orderItemsList: any[]
     }
 
+    /** Approve or Reject Canceled Order Params */
+    export interface IApproveOrRejectCanceledOrderParams {
+        /** Id of the canceled order item. */
+        orderItemId: number
+        /** Approve or reject the canceled order item. */
+        process: "approve" | "reject"
+    }
+
+    /** Approve or Reject Canceled Order Response */
+    export interface IApproveOrRejectCanceledOrderResponse {
+        isSuccess?: boolean | null
+        message?: string | null
+    }
+
+    /** Recieved Canceled Order Params */
+    export interface IRecievedCanceledOrderParams {
+        /** Ids of the received order items */
+        orderItemIds: number[]
+    }
+
+    /** Recieved Canceled Order Response */
+    export interface IRecievedCanceledOrderResponse {
+        orderItems?: IRecievedOrderItems[] | null
+    }
+
+    /** Recieved Order Items */
+    export interface IRecievedOrderItems {
+        orderItemId?: number | null
+        isSuccess?: boolean | null
+        validation?: Validation | null
+    }
+
+    /** Validation */
+    export interface Validation {
+        key?: string | null
+        message?: string | null
+    }
+    
     /** ------------------ Shared ------------------ */
 
     interface ICountResponse {

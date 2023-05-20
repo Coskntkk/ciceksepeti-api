@@ -11,6 +11,11 @@ const orderItemStatuses = new Object({
     return_waiting_for_supplier_approval: 23,
 })
 
+const processes = new Object({
+    approve: 1,
+    reject: 3
+})
+
 /**
  * Creates a CanceledOrder instance.
  *
@@ -83,6 +88,94 @@ CanceledOrder.prototype.list = async function list(params) {
         headers: this.ciceksepeti.baseHeaders,
         maxRedirects: 0,
         data: data,
+    }
+
+    return axios(config)
+        .then(function (response) {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error.response.data)
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
+
+/**
+ * Approves or rejects a canceled order.
+ *
+ * @param {Object} params Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+CanceledOrder.prototype.approveOrReject = async function approveOrReject(params) {
+    params = params || {}
+    if (!params.orderItemId) throw new Error('Order item id (orderItemId) is required.')
+    if (!params.process) throw new Error('Process (process) is required.')
+    if (!processes[params.process]) throw new Error('Process (process) is not valid.')
+
+    let data = {
+        orderItemId: params.orderItemId,
+        process: processes[params.process],
+    }
+
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/Order/cancelevaluation'
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+        data: data,
+    }
+
+    return axios(config)
+        .then(function (response) {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error.response.data)
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
+
+/**
+ * Approves that the seller has received the returned order item.
+ *
+ * @param {Object} params Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+CanceledOrder.prototype.recieved = async function recieved(params) {
+    params = params || {}
+    if (!params.orderItemIds) throw new Error('Order item ids (orderItemIds) is required.')
+    if (!Array.isArray(params.orderItemIds)) throw new Error('Order item ids (orderItemIds) must be an array.')
+
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/Order/refundprocessstartreceivedprocess'
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+        data: {
+            orderItemIds: params.orderItemIds,
+        },
     }
 
     return axios(config)

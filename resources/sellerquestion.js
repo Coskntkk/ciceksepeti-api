@@ -4,6 +4,19 @@ const Ciceksepeti = require('..')
 const axios = require('axios')
 const moment = require('moment')
 
+const branchActions = new Object({
+    answer_question: 1,
+    answer_question_private: 2,
+    inappropriate_question: 3,
+    question_belongs_to_another_seller: 4,
+})
+
+const branchActionDetails = new Object({
+    answered_before: 1,
+    question_is_about_order: 2,
+    other: 3,
+})
+
 /**
  * Creates a SellerQuestion instance.
  *
@@ -74,6 +87,97 @@ SellerQuestion.prototype.list = async function list(params) {
         url: url,
         headers: this.ciceksepeti.baseHeaders,
         maxRedirects: 0,
+    }
+
+    return axios(config)
+        .then(function (response) {
+            return response.data
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
+
+/**
+ * Answers a seller question.
+ *
+ * @param {Number} id Seller question ID
+ * @param {Object} params Parameters
+ *
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+SellerQuestion.prototype.answer = async function answer(id, params) {
+    params = params || {}
+    if (!id) {
+        throw new Error('Seller question ID (id) is required.')
+    }
+    if (!branchActions[params.branchAction]) {
+        throw new Error('Branch action (branchAction) is required.')
+    }
+    if (branchActions[params.branchAction] === 1) {
+        if (!params.answer) {
+            throw new Error('Answer (answer) is required when branch action (branchAction) is answer_question.')
+        }
+        if (params.branchActionDetail || params.branchDescription) {
+            throw new Error(
+                'Branch action detail (branchActionDetail) and branch description (branchDescription) must be empty when branch action (branchAction) is answer_question.'
+            )
+        }
+    } else if (branchActions[params.branchAction] === 2) {
+        if (!params.answer || !params.branchActionDetail) {
+            throw new Error(
+                'Answer (answer) and branch action detail (branchActionDetail) are required when branch action (branchAction) is answer_question_private.'
+            )
+        }
+        if (params.branchDescription) {
+            throw new Error(
+                'Branch description (branchDescription) must be empty when branch action (branchAction) is answer_question_private.'
+            )
+        }
+    } else if (branchActions[params.branchAction] === 3) {
+        if (!params.branchDescription) {
+            throw new Error(
+                'Branch description (branchDescription) is required when branch action (branchAction) is inappropriate_question.'
+            )
+        }
+        if (params.answer || params.branchActionDetail) {
+            throw new Error(
+                'Answer (answer) and branch action detail (branchActionDetail) must be empty when branch action (branchAction) is inappropriate_question.'
+            )
+        }
+    } else if (branchActions[params.branchAction] === 4) {
+        if (params.answer || params.branchActionDetail || params.branchDescription) {
+            throw new Error(
+                'Answer (answer), branch action detail (branchActionDetail) and branch description (branchDescription) must be empty when branch action (branchAction) is other.'
+            )
+        }
+    }
+
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/sellerquestions/' +
+        id
+
+    let data = {
+        answer: params.answer,
+        branchActionId: branchActions[params.branchAction],
+        branchActionDetailId: branchActionDetails[params.branchActionDetail],
+        branchDescription: params.branchDescription,
+    }
+
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+        data: data,
     }
 
     return axios(config)

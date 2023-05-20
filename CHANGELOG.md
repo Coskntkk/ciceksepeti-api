@@ -11,12 +11,22 @@ Planned changes. (May be in different versions)
 
 ### Added
 
--   More methods from Çiçeksepeti Marketplace API
+-   All methods from Çiçeksepeti Marketplace API
 -   Rate Limit and Retry After mechanics
--   Type improvements
--   Contribution guide
--   Code of Conduct
 -   Tests
+
+### Changed
+
+### Fixed
+
+## [1.0.9] - 2023-05-20
+
+New methods added.
+
+### Added
+
+-   Answer seller question method added.
+-   Send invoice method added.
 
 ### Changed
 

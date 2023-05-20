@@ -234,17 +234,18 @@ Product.prototype.update = async function update(items) {
     items.forEach((item, i) => {
         if (!item.productName) throw new Error('Product code (stockCode) is required. For item ' + i) + '.'
         if (!item.stockCode) throw new Error('Stock code (stockCode) is required. For item ' + i) + '.'
-        if (!item.mainProductCode) throw new Error('Main product code (mainProductCode) is required. For item ' + i) + '.'
+        if (!item.mainProductCode)
+            throw new Error('Main product code (mainProductCode) is required. For item ' + i) + '.'
         if (!item.isActive) throw new Error('Is active (isActive) is required. For item ' + i) + '.'
         if (!item.description) throw new Error('Description (description) is required. For item ' + i) + '.'
         if (!item.deliveryType) throw new Error('Delivery tipe (deliveryType) is required. For item ' + i) + '.'
-        if (!item.deliveryMessageType) throw new Error('Delivery message tipe (deliveryMessageType) is required. For item ' + i) + '.'
-        if (
-            !item.images || item.images.length === 0 || !Array.isArray(item.images)
-        ) throw new Error('Images (images) is required. For item ' + i) + '.'
+        if (!item.deliveryMessageType)
+            throw new Error('Delivery message tipe (deliveryMessageType) is required. For item ' + i) + '.'
+        if (!item.images || item.images.length === 0 || !Array.isArray(item.images))
+            throw new Error('Images (images) is required. For item ' + i) + '.'
 
-        item.deliveryType = deliveryTypes[item.deliveryType];
-        item.deliveryMessageType = deliveryMessageTypes[item.deliveryMessageType];
+        item.deliveryType = deliveryTypes[item.deliveryType]
+        item.deliveryMessageType = deliveryMessageTypes[item.deliveryMessageType]
     })
 
     let url =
@@ -289,20 +290,21 @@ Product.prototype.create = async function create(items) {
     if (items.length === 0) throw new Error('Items must not be empty.')
     items.forEach((item, i) => {
         if (!item.productName) throw new Error('Product code (stockCode) is required. For item ' + i) + '.'
-        if (!item.mainProductCode) throw new Error('Main product code (mainProductCode) is required. For item ' + i) + '.'
+        if (!item.mainProductCode)
+            throw new Error('Main product code (mainProductCode) is required. For item ' + i) + '.'
         if (!item.stockCode) throw new Error('Stock code (stockCode) is required. For item ' + i) + '.'
         if (!item.categoryId) throw new Error('Category id (categoryId) is required. For item ' + i) + '.'
         if (!item.description) throw new Error('Description (description) is required. For item ' + i) + '.'
         if (!item.deliveryType) throw new Error('Delivery tipe (deliveryType) is required. For item ' + i) + '.'
-        if (!item.deliveryMessageType) throw new Error('Delivery message tipe (deliveryMessageType) is required. For item ' + i) + '.'
-        if (
-            !item.images || item.images.length === 0 || !Array.isArray(item.images)
-        ) throw new Error('Images (images) is required. For item ' + i) + '.'
+        if (!item.deliveryMessageType)
+            throw new Error('Delivery message tipe (deliveryMessageType) is required. For item ' + i) + '.'
+        if (!item.images || item.images.length === 0 || !Array.isArray(item.images))
+            throw new Error('Images (images) is required. For item ' + i) + '.'
         if (!item.stockQuantity) throw new Error('Stock quantity (stockQuantity) is required. For item ' + i) + '.'
         if (!item.salesPrice) throw new Error('Sales price (salesPrice) is required. For item ' + i) + '.'
 
-        item.deliveryType = deliveryTypes[item.deliveryType];
-        item.deliveryMessageType = deliveryMessageTypes[item.deliveryMessageType];
+        item.deliveryType = deliveryTypes[item.deliveryType]
+        item.deliveryMessageType = deliveryMessageTypes[item.deliveryMessageType]
     })
 
     let url =

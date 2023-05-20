@@ -42,7 +42,7 @@ Counts products on Çiçeksepeti.
 
 ```js
 {
-  totalCount: 155
+    totalCount: 155
 }
 ```
 
@@ -94,7 +94,7 @@ where item is:
 
 ```js
 {
-  batchId: '...'
+    batchId: '...'
 }
 ```
 
@@ -138,7 +138,7 @@ where item is:
 
 ```js
 {
-  batchId: '...'
+    batchId: '...'
 }
 ```
 
@@ -184,7 +184,7 @@ where item is:
 
 ```js
 {
-  batchId: '...'
+    batchId: '...'
 }
 ```
 
@@ -254,7 +254,7 @@ Counts orders on Çiçeksepeti.
 
 ```js
 {
-  totalCount: 123
+    totalCount: 123
 }
 ```
 
@@ -279,6 +279,18 @@ Gets an order by orderNo.
 ```
 
 ---
+
+-   `ciceksepeti.order.sendInvoice([items])`
+
+Send invoice to customer. Items is an array of:
+
+| param       | required | type               |
+| ----------- | -------- | ------------------ |
+| orderItemId | true     | number             |
+| document    | false    | base64 or pdf file |
+| documentUrl | false    | string             |
+
+**Note:** Either document or documentUrl must be provided.
 
 ## Category
 
@@ -327,6 +339,21 @@ Gets seller questions on Çiçeksepeti.
 
 ---
 
+-   `ciceksepeti.sellerquestion.answer(id, [params])`
+
+Answers a seller question on Çiçeksepeti.
+
+**Note:** Id is the id of the question.
+
+| param              | required | type                                                                                                               |
+| ------------------ | -------- | ------------------------------------------------------------------------------------------------------------------ |
+| answer             | false    | string                                                                                                             |
+| branchAction       | false    | enum: "answer_question", "answer_question_private", "inappropriate_question", "question_belongs_to_another_seller" |
+| branchActionDetail | false    | enum: "answered_before", "question_is_about_order", "other"                                                        |
+| branchDescription  | false    | string                                                                                                             |
+
+---
+
 ## Canceled Order
 
 -   `ciceksepeti.canceledOrder.list([params])`
@@ -355,10 +382,10 @@ Gets canceled orders on Çiçeksepeti.
 
 Approves or rejects the canceled order item by the seller.
 
-| param           | required | type |
-| --------------- | -------- | -------- |
-| orderItemId | true    | number |
-| process        | true     | enum: 'approve', 'reject' |
+| param       | required | type                      |
+| ----------- | -------- | ------------------------- |
+| orderItemId | true     | number                    |
+| process     | true     | enum: 'approve', 'reject' |
 
 -   Response:
 
@@ -375,9 +402,9 @@ Approves or rejects the canceled order item by the seller.
 
 Approves that the order item is received by the seller.
 
-| param           | required | type |
-| --------------- | -------- | -------- |
-| orderItemIds | true    | number[] |
+| param        | required | type     |
+| ------------ | -------- | -------- |
+| orderItemIds | true     | number[] |
 
 -   Response:
 

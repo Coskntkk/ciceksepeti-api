@@ -13,7 +13,7 @@ const orderItemStatuses = new Object({
 
 const processes = new Object({
     approve: 1,
-    reject: 3
+    reject: 3,
 })
 
 /**

@@ -37,9 +37,7 @@ declare class Ciceksepeti {
         /** Updates products. */
         update: (items: Ciceksepeti.IUpdateProductItem[]) => Promise<Ciceksepeti.IBatchIdResponse>
         /** Updates stock or price of a product. */
-        updateStockOrPrice: (
-            items: Ciceksepeti.IUpdateStockOrPriceItem[]
-        ) => Promise<Ciceksepeti.IBatchIdResponse>
+        updateStockOrPrice: (items: Ciceksepeti.IUpdateStockOrPriceItem[]) => Promise<Ciceksepeti.IBatchIdResponse>
         /** Returns the status of a product process. */
         batchStatus: (batchId: string) => Promise<Ciceksepeti.IBatchStatusResponse>
     }
@@ -50,6 +48,8 @@ declare class Ciceksepeti {
         count: (params?: Ciceksepeti.ICountOrdersParams) => Promise<Ciceksepeti.ICountResponse>
         /** Returns the details of an order. */
         get: (params: Ciceksepeti.IGetOrderParams) => Promise<Ciceksepeti.IOrder>
+        /** Sends an invoice. */
+        sendInvoice: (params: Ciceksepeti.ISendInvoiceParams) => Promise<any>
     }
     category: {
         /** Returns a list of categories. */
@@ -61,14 +61,20 @@ declare class Ciceksepeti {
     sellerquestion: {
         /** Returns a list of seller questions. */
         list: (params?: Ciceksepeti.IListSellerQuestionsParams) => Promise<Ciceksepeti.IListSellerQuestionsResponse>
+        /** Answers a seller question. */
+        answer: (id: number, params: Ciceksepeti.IAnswerSellerQuestionParams) => Promise<any>
     }
     canceledOrder: {
         /** Returns a list of canceled orders. */
         list: (params?: Ciceksepeti.IListCanceledOrdersParams) => Promise<Ciceksepeti.IListCanceledOrdersResponse>
         /** Approves or rejects a canceled order. */
-        approveOrReject: (params: Ciceksepeti.IApproveOrRejectCanceledOrderParams) => Promise<Ciceksepeti.IApproveOrRejectCanceledOrderResponse>
+        approveOrReject: (
+            params: Ciceksepeti.IApproveOrRejectCanceledOrderParams
+        ) => Promise<Ciceksepeti.IApproveOrRejectCanceledOrderResponse>
         /** Approves that the seller has received the returned order item. */
-        recieved: (params: Ciceksepeti.IRecievedCanceledOrderParams) => Promise<Ciceksepeti.IRecievedCanceledOrderResponse>
+        recieved: (
+            params: Ciceksepeti.IRecievedCanceledOrderParams
+        ) => Promise<Ciceksepeti.IRecievedCanceledOrderResponse>
     }
 }
 
@@ -213,9 +219,9 @@ declare namespace Ciceksepeti {
         /** Media link of the product. */
         mediaLink?: string | null
         /** Delivery tipe of the product. *Required*. Options: *with_service*, *with_cargo*, *with_service_and_cargo* */
-        deliveryType: "with_service" | "with_cargo" | "with_service_and_cargo"
+        deliveryType: 'with_service' | 'with_cargo' | 'with_service_and_cargo'
         /** Delivery message type of the product. *Required*. Options: *cicek_service*, *gift_cargo_same_day*, *gift_cargo_1_3_days*, *gift_cargo_1_2_days* */
-        deliveryMessageType: "cicek_service" | "gift_cargo_same_day" | "gift_cargo_1_3_days" | "gift_cargo_1_2_days"
+        deliveryMessageType: 'cicek_service' | 'gift_cargo_same_day' | 'gift_cargo_1_3_days' | 'gift_cargo_1_2_days'
         /** Images of the product. *Required* */
         images: string[]
         /** Attributes of the product. */
@@ -255,9 +261,9 @@ declare namespace Ciceksepeti {
         /** List price of the product. *Required* */
         listPrice?: number | null
         /** Delivery tipe of the product. *Required*. Options: *with_service*, *with_cargo*, *with_service_and_cargo* */
-        deliveryType: "with_service" | "with_cargo" | "with_service_and_cargo"
+        deliveryType: 'with_service' | 'with_cargo' | 'with_service_and_cargo'
         /** Delivery message type of the product. *Required*. Options: *cicek_service*, *gift_cargo_same_day*, *gift_cargo_1_3_days*, *gift_cargo_1_2_days* */
-        deliveryMessageType: "cicek_service" | "gift_cargo_same_day" | "gift_cargo_1_3_days" | "gift_cargo_1_2_days"
+        deliveryMessageType: 'cicek_service' | 'gift_cargo_same_day' | 'gift_cargo_1_3_days' | 'gift_cargo_1_2_days'
         /** Images of the product. *Required* */
         images: string[]
         /** Attributes of the product. */
@@ -402,6 +408,16 @@ declare namespace Ciceksepeti {
         value?: string | null
     }
 
+    /** Send Invoice Params */
+    interface ISendInvoiceParams {
+        /** Order item ID. *Required* */
+        orderItemId: number
+        /** Invoice document. Pdf or base64 encoded string. */
+        document: any | null
+        /** Invoice document url. */
+        documentUrl: string | null
+    }
+
     /** ------------------ Categories ------------------ */
 
     /** List Categories Params */
@@ -500,6 +516,23 @@ declare namespace Ciceksepeti {
         imageUrl?: string | null
     }
 
+    /** Answer Seller Question Params */
+    interface IAnswerSellerQuestionParams {
+        /** Answer text. */
+        answer: string | null
+        /** Branch action. Options: *answer_question*, *answer_question_private*, *inappropriate_question*, *question_belongs_to_another_seller*. */
+        branchAction:
+            | 'answer_question'
+            | 'answer_question_private'
+            | 'inappropriate_question'
+            | 'question_belongs_to_another_seller'
+            | null
+        /** Branch action detail. Options: *answered_before*, *question_is_about_order*, *other*. */
+        branchActionDetail?: 'answered_before' | 'question_is_about_order' | 'other' | null
+        /** Branch action description. */
+        branchDescription?: string | null
+    }
+
     /** ------------------ Canceled Orders ------------------ */
 
     /** List Canceled Orders Params */
@@ -527,7 +560,7 @@ declare namespace Ciceksepeti {
         /** Id of the canceled order item. */
         orderItemId: number
         /** Approve or reject the canceled order item. */
-        process: "approve" | "reject"
+        process: 'approve' | 'reject'
     }
 
     /** Approve or Reject Canceled Order Response */
@@ -559,7 +592,7 @@ declare namespace Ciceksepeti {
         key?: string | null
         message?: string | null
     }
-    
+
     /** ------------------ Shared ------------------ */
 
     interface ICountResponse {

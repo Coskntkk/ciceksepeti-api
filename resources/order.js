@@ -183,4 +183,58 @@ Order.prototype.get = async function get(params) {
         })
 }
 
+/**
+ * Sends invoice.
+ *
+ * @param {Array} items Query parameters
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Order.prototype.sendInvoice = async function sendInvoice(items) {
+    if (!items || !Array.isArray(items) || items.length === 0) {
+        throw new Error('Items (items) is required and must be an array.')
+    }
+    items.forEach(function (item, i) {
+        if (!item.orderItemId) {
+            throw new Error('Order item id (orderItemId) is required for item ' + i + '.')
+        }
+        if (!item.document && !item.documentUrl) {
+            throw new Error('Document (document) or document url (documentUrl) is required for item ' + i + '.')
+        }
+        if (item.document && item.documentUrl) {
+            throw new Error(
+                'Document (document) and document url (documentUrl) cannot be used together for item ' + i + '.'
+            )
+        }
+    })
+
+    let url =
+        this.ciceksepeti.baseUrl.protocol +
+        '//' +
+        this.ciceksepeti.baseUrl.hostname +
+        '/api' +
+        '/' +
+        this.ciceksepeti.options.apiVersion +
+        '/Branch/SendInvoiceMail'
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: this.ciceksepeti.baseHeaders,
+        maxRedirects: 0,
+        data: {
+            items: items,
+        },
+    }
+
+    return axios(config)
+        .then(function (response) {
+            return response.data['supplierOrderListWithBranch'][0]
+        })
+        .catch(function (error) {
+            throw new Error(error.response.data['Message'] || error.response.data['message'])
+        })
+}
+
 module.exports = Order

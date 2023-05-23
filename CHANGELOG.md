@@ -18,6 +18,18 @@ Planned changes. (May be in different versions)
 
 ### Fixed
 
+## [1.1.0] - 2023-05-23
+
+All methods are now covered. Bug fixes.
+
+### Added
+
+### Changed
+
+### Fixed
+
+-  Fixed wrong sendWithOwnCargo parameters definitions.
+
 ## [1.0.10] - 2023-05-23
 
 New methods added. All methods are now covered.

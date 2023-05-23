@@ -84,7 +84,7 @@ declare class Ciceksepeti {
         /** Sends a cargo using Çiçek Sepeti's cargo service. */
         sendWithCiceksepeti: (orderItemIds: number[]) => Promise<any>
         /** Sends a cargo using your own cargo service. */
-        sendWithOwnCargo: (orderItemIds: ISendWithOwnCargoItem[]) => Promise<any>
+        sendWithOwnCargo: (orderItemIds: Ciceksepeti.ISendWithOwnCargoItem[]) => Promise<any>
     }
 }
 

@@ -1,6 +1,7 @@
 # Çiçeksepeti API
 
 [![Version npm][npm-ciceksepeti-api-badge]][npm-ciceksepeti-api]
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Çiçeksepeti Marketplace API bindings for Node.js.
 

@@ -76,6 +76,16 @@ declare class Ciceksepeti {
             params: Ciceksepeti.IRecievedCanceledOrderParams
         ) => Promise<Ciceksepeti.IRecievedCanceledOrderResponse>
     }
+    cargo: {
+        /** Sends cargo measurements. */
+        sendMeasurements: (items: Ciceksepeti.ISendCargoMeasurementItem[]) => Promise<any>
+        /** Changes the cargo company of an order. */
+        changeCompany: (items: Ciceksepeti.IChangeCargoCompanyItem[]) => Promise<any>
+        /** Sends a cargo using Çiçek Sepeti's cargo service. */
+        sendWithCiceksepeti: (orderItemIds: number[]) => Promise<any>
+        /** Sends a cargo using your own cargo service. */
+        sendWithOwnCargo: (orderItemIds: ISendWithOwnCargoItem[]) => Promise<any>
+    }
 }
 
 /*~ If you want to expose types from your module as well, you can
@@ -416,6 +426,65 @@ declare namespace Ciceksepeti {
         document: any | null
         /** Invoice document url. */
         documentUrl: string | null
+    }
+
+    /** Send Cargo Measurement Item */
+    interface ISendCargoMeasurementItem {
+        /** Product ID. *Required* */
+        orderProductId: number
+        /** Product deci value. *Required* */
+        deci: number
+        /** Product quantity. *Required* */
+        quantity: number
+    }
+
+    /** Change Cargo Company Item */
+    interface IChangeCargoCompanyItem {
+        /** Order Product ID. *Required* */
+        orderProductId: number
+        /** Cargo company name. *Required* Must be one of the following: *mng_kargo*, *yurtici_Kargo*, *surat_kargo*, *aras_kargo*, *ptt_kargo*, *ups_kargo*, *horoz_lojistik*, *borusan_lojistik* */
+        cargoCompany:
+            | 'mng_kargo'
+            | 'yurtici_Kargo'
+            | 'surat_kargo'
+            | 'aras_kargo'
+            | 'ptt_kargo'
+            | 'ups_kargo'
+            | 'horoz_lojistik'
+            | 'borusan_lojistik'
+    }
+
+    /** Send With Own Cargo Item */
+    interface ISendWithOwnCargoItem {
+        /** Order item ID. *Required* */
+        orderItemId: number
+        /** Current status of the order. *Required* Must be one of the following: *new*, *preparing*, *shipped*, *will_be_shipped*, *delivered*, *delivered_to_car*, *returned_to_firm* */
+        orderItemStatus:
+            | 'new'
+            | 'preparing'
+            | 'shipped'
+            | 'will_be_shipped'
+            | 'delivered'
+            | 'delivered_to_car'
+            | 'returned_to_firm'
+        /** Cargo company name. *Required* Must be one of the following: *mng_kargo*, *yurtici_Kargo*, *surat_kargo*, *aras_kargo*, *ptt_kargo*, *ups_kargo*, *horoz_lojistik*, *borusan_lojistik* */
+        cargoBusiness?:
+            | 'mng_kargo'
+            | 'yurtici_Kargo'
+            | 'surat_kargo'
+            | 'aras_kargo'
+            | 'ptt_kargo'
+            | 'ups_kargo'
+            | 'horoz_lojistik'
+            | 'borusan_lojistik'
+        /** Cargo tracking number. */
+        shipmentNumber?: number
+        /** Cargo tracking url. */
+        shipmentTrackingUrl?: string
+        /** Receiver name. */
+        receiverName?: string
+        /** Delivery time. */
+        deliveryTime?: string
     }
 
     /** ------------------ Categories ------------------ */

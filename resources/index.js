@@ -6,6 +6,7 @@ const map = {
     category: 'category',
     sellerquestion: 'sellerquestion',
     canceledOrder: 'canceledOrder',
+    cargo: 'cargo',
 }
 
 /**

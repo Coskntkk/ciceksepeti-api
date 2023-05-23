@@ -282,7 +282,7 @@ Gets an order by orderNo.
 
 -   `ciceksepeti.order.sendInvoice([items])`
 
-Send invoice to customer. Items is an array of:
+Send invoice to customer. Items is an array of objects:
 
 | param       | required | type               |
 | ----------- | -------- | ------------------ |
@@ -291,6 +291,55 @@ Send invoice to customer. Items is an array of:
 | documentUrl | false    | string             |
 
 **Note:** Either document or documentUrl must be provided.
+
+## Cargo
+
+-   `ciceksepeti.cargo.sendMeasurements([items])`
+
+Changes cargo measurement. Items is an array of objects:
+
+| param          | required | type   |
+| -------------- | -------- | ------ |
+| orderProductId | true     | number |
+| deci           | true     | number |
+| quantity       | true     | number |
+
+---
+
+-   `ciceksepeti.cargo.changeCompany([items])`
+
+Changes cargo company. Items is an array of objects:
+
+| param          | required | type                                                                                                                            |
+| -------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| orderProductId | true     | number                                                                                                                          |
+| cargoCompany   | true     | enum: "mng_kargo", "yurtici_Kargo", "surat_kargo", "aras_kargo", "ptt_kargo", "ups_kargo", "horoz_lojistik", "borusan_lojistik" |
+
+---
+
+-   `ciceksepeti.cargo.sendWithCiceksepeti([orderItemIds])`
+
+Sends a cargo using Çiçek Sepeti's cargo service. OrderItemIds is an array of numbers.
+
+| param       | required | type   |
+| ----------- | -------- | ------ |
+| orderItemId | true     | number |
+
+---
+
+-   `ciceksepeti.cargo.sendWithOwnCargo([items])`
+
+Sends a cargo using your own cargo service. Items is an array of objects:
+
+| param               | required | type                                                                                                                            |
+| ------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| orderItemId         | true     | number                                                                                                                          |
+| orderItemStatus     | true     | enum: 'new', 'preparing', 'shipped', 'will_be_shipped', 'delivered', 'delivered_to_car', 'returned_to_firm'                     |
+| cargoBusiness       | false    | enum: 'mng_kargo', 'yurtici_Kargo', 'surat_kargo', 'aras_kargo', 'ptt_kargo', 'ups_kargo', 'horoz_lojistik', 'borusan_lojistik' |
+| shipmentNumber      | false    | number                                                                                                                          |
+| shipmentTrackingUrl | false    | string                                                                                                                          |
+| receiverName        | false    | string                                                                                                                          |
+| deliveryTime        | false    | string                                                                                                                          |
 
 ## Category
 

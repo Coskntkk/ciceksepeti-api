@@ -11,9 +11,23 @@ Planned changes. (May be in different versions)
 
 ### Added
 
--   All methods from Çiçeksepeti Marketplace API
 -   Rate Limit and Retry After mechanics
 -   Tests
+
+### Changed
+
+### Fixed
+
+## [1.0.10] - 2023-05-23
+
+New methods added. All methods are now covered.
+
+### Added
+
+-   Send cargo measurements method added.
+-   Change cargo company method added.
+-   Send cargo using Çiçeksepeti service method added.
+-   Send cargo using own service method added.
 
 ### Changed
 

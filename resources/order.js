@@ -230,7 +230,7 @@ Order.prototype.sendInvoice = async function sendInvoice(items) {
 
     return axios(config)
         .then(function (response) {
-            return response.data['supplierOrderListWithBranch'][0]
+            return response.data
         })
         .catch(function (error) {
             throw new Error(error.response.data['Message'] || error.response.data['message'])
